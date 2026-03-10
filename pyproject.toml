@@ -1,0 +1,104 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "socratic-analyzer"
+version = "0.1.0"
+description = "Production-grade code analysis package with LLM-powered insights"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Socratic Analyzer", email = "info@socratic-analyzer.dev"}
+]
+keywords = ["code-analysis", "static-analysis", "metrics", "linting", "quality", "insights"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+dependencies = [
+    "socrates-nexus>=0.1.0",
+]
+
+[project.optional-dependencies]
+openclaw = []
+langchain = ["langchain>=0.1.0"]
+llm = ["socrates-nexus>=0.1.0"]
+
+all = [
+    "langchain>=0.1.0",
+]
+
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-benchmark>=4.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "langchain>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Nireus79/Socratic-analyzer"
+Documentation = "https://github.com/Nireus79/Socratic-analyzer/tree/main/docs"
+Repository = "https://github.com/Nireus79/Socratic-analyzer.git"
+Issues = "https://github.com/Nireus79/Socratic-analyzer/issues"
+
+[tool.setuptools]
+packages = ["socratic_analyzer"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP"]
+ignore = ["E501", "UP006", "UP035"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = [
+    "torch",
+    "torch.*",
+]
+follow_imports = "silent"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "--cov=src/socratic_analyzer --cov-report=term-missing --cov-report=html -v"
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "slow: Slow tests",
+]
+asyncio_mode = "auto"
