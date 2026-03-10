@@ -126,7 +126,7 @@ class PatternAnalyzer(BaseAnalyzer):
                 if isinstance(item, ast.Return) and item.value:
                     if isinstance(item.value, ast.Call):
                         returns_objects = True
-                elif isinstance(item, (ast.If, ast.Match)):
+                elif isinstance(item, ast.If) or (hasattr(ast, 'Match') and isinstance(item, ast.Match)):
                     has_conditional_logic = True
 
             if returns_objects and has_conditional_logic and node.name.endswith(
