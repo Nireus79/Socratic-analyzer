@@ -22,6 +22,24 @@ Socratic Analyzer provides automated code analysis with static analysis, complex
 - **LLM Integration** - Get intelligent recommendations via Socrates Nexus
 - **Multiple Formats** - Generate reports in text, JSON, and Markdown
 - **Framework Integration** - Use as Openclaw skill or LangChain tool
+- **Part of Socrates Ecosystem** - Built on Socrates Nexus for LLM-powered insights
+
+## Part of the Socrates Ecosystem
+
+**Socratic Analyzer** is a core component of the [Socrates Ecosystem](https://github.com/Nireus79/Socrates-nexus/blob/main/ECOSYSTEM.md) - a collection of production-grade AI packages that work together.
+
+### How It Uses Socrates Nexus
+- LLM-powered recommendations use Socrates Nexus for intelligent insights
+- Works with any Socrates Nexus provider (Claude, GPT-4, Gemini, Ollama)
+- Automatic provider switching for cost optimization and reliability
+
+### Related Packages in the Ecosystem
+- **[Socrates Nexus](https://github.com/Nireus79/Socrates-nexus)** (Dependency) - Universal LLM client
+- **[Socratic RAG](https://github.com/Nireus79/Socratic-rag)** - Knowledge retrieval and management (also uses Socrates Nexus)
+- **[Socratic Agents](https://github.com/Nireus79/Socratic-agents)** (Coming Q4 2026) - Multi-agent orchestration
+- **[Socratic Learning](https://github.com/Nireus79/Socratic-learning)** (Coming Q1 2027) - Continuous improvement engine
+
+👉 **Full ecosystem guide**: See [Socrates Nexus ECOSYSTEM.md](https://github.com/Nireus79/Socrates-nexus/blob/main/ECOSYSTEM.md)
 
 ## Installation
 
