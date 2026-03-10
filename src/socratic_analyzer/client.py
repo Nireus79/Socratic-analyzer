@@ -6,7 +6,11 @@ from socratic_analyzer.analyzers.complexity import ComplexityAnalyzer
 from socratic_analyzer.analyzers.imports import ImportAnalyzer
 from socratic_analyzer.analyzers.metrics import MetricsAnalyzer
 from socratic_analyzer.analyzers.static import StaticAnalyzer
+from socratic_analyzer.analyzers.patterns import PatternAnalyzer
+from socratic_analyzer.analyzers.smells import CodeSmellDetector
+from socratic_analyzer.analyzers.performance import PerformanceAnalyzer
 from socratic_analyzer.models import Analysis, AnalyzerConfig, CodeIssue, MetricResult
+from socratic_analyzer.utils.quality_scorer import QualityScorer
 
 
 class AnalyzerClient:
@@ -31,6 +35,9 @@ class AnalyzerClient:
         )
         self._metrics_analyzer = MetricsAnalyzer()
         self._import_analyzer = ImportAnalyzer()
+        self._pattern_analyzer = PatternAnalyzer()
+        self._smell_detector = CodeSmellDetector()
+        self._performance_analyzer = PerformanceAnalyzer()
 
     def analyze_file(self, file_path: str) -> Analysis:
         """Analyze a single Python file.
@@ -80,6 +87,15 @@ class AnalyzerClient:
 
         # Run import analysis
         issues.extend(self._import_analyzer.analyze(code, file_path))
+
+        # Run pattern analysis
+        issues.extend(self._pattern_analyzer.analyze(code, file_path))
+
+        # Run code smell detection
+        issues.extend(self._smell_detector.analyze(code, file_path))
+
+        # Run performance analysis
+        issues.extend(self._performance_analyzer.analyze(code, file_path))
 
         # Collect metrics
         metrics = []
@@ -372,6 +388,12 @@ class AnalyzerClient:
         """
         recommendations = []
 
+        # Add quality score and rating
+        quality_report = QualityScorer.create_quality_report(analysis)
+        score = quality_report["overall_score"]
+        rating = quality_report["rating"]
+        recommendations.append(f"[SCORE] Quality Score: {score}/100 ({rating})")
+
         # Critical issues
         critical_count = analysis.critical_issues
         if critical_count > 0:
@@ -391,6 +413,27 @@ class AnalyzerClient:
         if complexity_issues:
             recommendations.append(
                 "[COMPLEXITY] Refactor complex functions (consider breaking into smaller functions)"
+            )
+
+        # Performance issues
+        performance_issues = [i for i in analysis.issues if i.issue_type == "performance"]
+        if performance_issues:
+            recommendations.append(
+                f"[PERFORMANCE] Optimize {len(performance_issues)} performance issue(s)"
+            )
+
+        # Code smell issues
+        smell_issues = [i for i in analysis.issues if i.issue_type == "smell"]
+        if smell_issues:
+            recommendations.append(
+                f"[SMELL] Address {len(smell_issues)} code smell(s) for maintainability"
+            )
+
+        # Pattern-related recommendations
+        pattern_issues = [i for i in analysis.issues if i.issue_type == "pattern"]
+        if pattern_issues:
+            recommendations.append(
+                f"[PATTERNS] Review {len(pattern_issues)} design pattern(s)"
             )
 
         # Documentation issues
@@ -420,7 +463,13 @@ class AnalyzerClient:
                     "[MAINTAINABILITY] Maintainability is low - consider refactoring"
                 )
 
-        if not recommendations:
-            recommendations.append("[OK] Code quality is good!")
+        # Add quality scorer suggestions if score is low
+        if score < 70:
+            for suggestion in quality_report.get("suggestions", []):
+                if not any(rec.startswith("[") for rec in [suggestion]):
+                    recommendations.append(f"[IMPROVEMENT] {suggestion}")
+
+        if len(recommendations) == 1:  # Only has quality score
+            recommendations.append("[OK] Code quality is acceptable")
 
         return recommendations
