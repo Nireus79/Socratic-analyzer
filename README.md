@@ -6,6 +6,16 @@ Production-grade code analysis package with LLM-powered insights. Analyze Python
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PyPI Status](https://img.shields.io/badge/PyPI-Coming%20Soon-blue.svg)](https://pypi.org/)
 
+## Why Socratic Analyzer?
+
+Code quality matters. Socratic Analyzer provides comprehensive code intelligence:
+
+- **Static Analysis** - Detect issues, violations, and code smells automatically
+- **Complexity Metrics** - Calculate cyclomatic complexity, maintainability index, and quality scores
+- **Pattern Detection** - Identify antipatterns, design patterns, and performance problems
+- **Security Analysis** - Find potential security vulnerabilities and weaknesses
+- **LLM Integration** - Get intelligent recommendations via Socrates Nexus for actionable improvement
+
 ## Overview
 
 Socratic Analyzer provides automated code analysis with static analysis, complexity metrics, pattern detection, and LLM-powered recommendations. Perfect for code quality assurance, refactoring guidance, and architectural insights.
