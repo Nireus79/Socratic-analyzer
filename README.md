@@ -296,6 +296,16 @@ PATTERNS DETECTED
 - Address high-severity issues
 ```
 
+## Support Development
+
+If you find this package useful, consider supporting development:
+
+- [Become a Sponsor](https://github.com/sponsors/Nireus79) - Get early access to new features
+- [Star on GitHub](https://github.com/Nireus79/Socratic-analyzer) - Shows your appreciation
+- [Report Issues](https://github.com/Nireus79/Socratic-analyzer/issues) - Help improve the package
+
+Your support helps fund development of the entire Socratic ecosystem.
+
 ## Examples
 
 See the `examples/` directory for complete working examples:
