@@ -57,12 +57,12 @@ class Calculator:
 
     def test_tool_run_with_issues(self, tool) -> None:
         """Test tool with problematic code."""
-        code = '''
+        code = """
 def bad():
     if x:
         if y:
             pass
-'''
+"""
         result = tool._run(code)
 
         assert isinstance(result, str)
@@ -84,13 +84,13 @@ def bad():
         tool = SocraticAnalyzerIssuesTool()
 
         assert tool.name == "socratic_detect_issues"
-        code = '''
+        code = """
 def bad():
     try:
         pass
     except:
         pass
-'''
+"""
         result = tool._run(code)
 
         assert isinstance(result, str)
@@ -158,7 +158,7 @@ def clean_function(x, y):
         """Test recommendations tool with problematic code."""
         tool = SocraticAnalyzerRecommendationsTool()
 
-        bad_code = '''
+        bad_code = """
 def complex(a, b, c, d, e, f):
     if a:
         if b:
@@ -167,7 +167,7 @@ def complex(a, b, c, d, e, f):
                     if e:
                         return f
     return 0
-'''
+"""
         result = tool._run(bad_code)
 
         assert isinstance(result, str)

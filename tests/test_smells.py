@@ -81,60 +81,60 @@ def long_method():
 
     def test_too_many_parameters(self, detector) -> None:
         """Test detection of too many parameters."""
-        code = '''
+        code = """
 def function_with_many_params(a, b, c, d, e, f, g):
     return a + b + c + d + e + f + g
-'''
+"""
         issues = detector.analyze(code, "test.py")
         assert any(i.issue_type == "smell" and "parameter" in i.message.lower() for i in issues)
 
     def test_global_variable_detection(self, detector) -> None:
         """Test detection of global variable usage."""
-        code = '''
+        code = """
 global_var = 10
 
 def modify_global():
     global global_var
     global_var = 20
-'''
+"""
         issues = detector.analyze(code, "test.py")
         assert any(i.issue_type == "smell" and "global" in i.message.lower() for i in issues)
 
     def test_bare_except_detection(self, detector) -> None:
         """Test detection of bare except clause."""
-        code = '''
+        code = """
 try:
     risky_operation()
 except:
     pass
-'''
+"""
         issues = detector.analyze(code, "test.py")
         assert any(i.issue_type == "smell" and "except" in i.message.lower() for i in issues)
 
     def test_broad_exception_detection(self, detector) -> None:
         """Test detection of overly broad exception handling."""
-        code = '''
+        code = """
 try:
     do_something()
 except Exception:
     pass
-'''
+"""
         issues = detector.analyze(code, "test.py")
         assert any(i.issue_type == "smell" and "exception" in i.message.lower() for i in issues)
 
     def test_mutable_default_argument_detection(self, detector) -> None:
         """Test detection of mutable default arguments."""
-        code = '''
+        code = """
 def function_with_mutable_default(items=[]):
     items.append(1)
     return items
-'''
+"""
         issues = detector.analyze(code, "test.py")
         assert any(i.issue_type == "smell" and "mutable" in i.message.lower() for i in issues)
 
     def test_god_class_detection(self, detector) -> None:
         """Test detection of god classes."""
-        code = '''
+        code = """
 class GodClass:
     def method1(self): pass
     def method2(self): pass
@@ -157,20 +157,22 @@ class GodClass:
     def method19(self): pass
     def method20(self): pass
     def method21(self): pass
-'''
+"""
         issues = detector.analyze(code, "test.py")
         assert any(i.issue_type == "smell" and "method" in i.message.lower() for i in issues)
 
     def test_magic_number_detection(self, detector) -> None:
         """Test detection of magic numbers."""
-        code = '''
+        code = """
 x = 42
 y = 3.14159
 z = 999
-'''
+"""
         issues = detector.analyze(code, "test.py")
         # Should have at least one magic number issue
-        magic_issues = [i for i in issues if i.issue_type == "smell" and "magic" in i.message.lower()]
+        magic_issues = [
+            i for i in issues if i.issue_type == "smell" and "magic" in i.message.lower()
+        ]
         assert len(magic_issues) > 0
 
     def test_syntax_error_handling(self, detector) -> None:

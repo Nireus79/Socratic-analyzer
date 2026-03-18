@@ -1,6 +1,5 @@
 """Tests for quality scorer utility."""
 
-
 from socratic_analyzer.models import Analysis, CodeIssue, MetricResult
 from socratic_analyzer.utils.quality_scorer import QualityScorer
 

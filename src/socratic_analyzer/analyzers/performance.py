@@ -86,9 +86,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_list_operations_in_loop(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_list_operations_in_loop(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect inefficient list operations in loops.
 
         Args:
@@ -123,9 +121,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_repeated_function_calls(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_repeated_function_calls(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect repeated function calls that could be cached.
 
         Args:
@@ -164,9 +160,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_inefficient_list_operations(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_inefficient_list_operations(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect inefficient list operations.
 
         Args:
@@ -198,9 +192,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_n_plus_one_patterns(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_n_plus_one_patterns(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect N+1 query pattern (conceptual).
 
         Args:
@@ -274,9 +266,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_type_checking_in_hot_path(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_type_checking_in_hot_path(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect type checking in hot paths.
 
         Args:

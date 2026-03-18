@@ -31,7 +31,7 @@ class Calculator:
     @pytest.fixture
     def problematic_code(self) -> str:
         """Code with issues."""
-        return '''
+        return """
 def complex_function(x):
     if x > 0:
         if x > 10:
@@ -48,7 +48,7 @@ def bad_except():
         risky()
     except:
         pass
-'''
+"""
 
     def test_skill_initialization(self, skill) -> None:
         """Test skill initialization."""
@@ -112,7 +112,7 @@ def bad_except():
 
     def test_detect_patterns(self, skill) -> None:
         """Test pattern detection."""
-        code = '''
+        code = """
 class Singleton:
     _instance = None
 
@@ -121,7 +121,7 @@ class Singleton:
         if cls._instance is None:
             cls._instance = cls()
         return cls._instance
-'''
+"""
         patterns = skill.detect_patterns(code)
 
         assert isinstance(patterns, list)
@@ -160,6 +160,7 @@ class Singleton:
         assert len(report) > 0
         # Should be valid JSON
         import json
+
         data = json.loads(report)
         assert "file_path" in data
 

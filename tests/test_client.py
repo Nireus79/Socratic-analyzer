@@ -249,9 +249,7 @@ class TestAsyncAnalyzerClient:
         file2.write_text("def bar():\n    pass\n")
 
         # Analyze
-        analyses = await async_client.analyze_files_async(
-            [str(file1), str(file2)]
-        )
+        analyses = await async_client.analyze_files_async([str(file1), str(file2)])
 
         assert len(analyses) == 2
         assert all(isinstance(a, Analysis) for a in analyses)
@@ -271,9 +269,7 @@ class TestAsyncAnalyzerClient:
         assert analyses[1].file_path == "test2.py"
 
     @pytest.mark.asyncio
-    async def test_async_generate_report(
-        self, async_client, sample_code
-    ) -> None:
+    async def test_async_generate_report(self, async_client, sample_code) -> None:
         """Test async report generation."""
         analysis = await async_client.analyze_code_async(sample_code, "test.py")
         report = await async_client.generate_report_async(analysis, format="text")

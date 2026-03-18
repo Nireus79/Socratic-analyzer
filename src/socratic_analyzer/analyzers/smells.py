@@ -59,9 +59,7 @@ class CodeSmellDetector(BaseAnalyzer):
 
         return issues
 
-    def _detect_long_methods(
-        self, code: str, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_long_methods(self, code: str, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect methods that are too long.
 
         Args:
@@ -94,9 +92,7 @@ class CodeSmellDetector(BaseAnalyzer):
 
         return issues
 
-    def _detect_too_many_parameters(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_too_many_parameters(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect functions with too many parameters.
 
         Args:
@@ -129,9 +125,7 @@ class CodeSmellDetector(BaseAnalyzer):
 
         return issues
 
-    def _detect_duplicate_code(
-        self, code: str, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_duplicate_code(self, code: str, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect duplicate code blocks.
 
         Args:
@@ -173,9 +167,7 @@ class CodeSmellDetector(BaseAnalyzer):
 
         return issues
 
-    def _detect_global_variables(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_global_variables(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect global variable usage.
 
         Args:
@@ -214,9 +206,7 @@ class CodeSmellDetector(BaseAnalyzer):
 
         return issues
 
-    def _detect_magic_numbers(
-        self, code: str, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_magic_numbers(self, code: str, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect magic numbers without explanation.
 
         Args:
@@ -241,9 +231,7 @@ class CodeSmellDetector(BaseAnalyzer):
                         issue_type="smell",
                         severity="low",
                         message=f"Magic number {node.value} without explanation",
-                        location=self._format_location(
-                            file_path, getattr(node, "lineno", 1)
-                        ),
+                        location=self._format_location(file_path, getattr(node, "lineno", 1)),
                         suggestion="Define as named constant for clarity",
                     )
                 )
@@ -253,9 +241,7 @@ class CodeSmellDetector(BaseAnalyzer):
 
         return issues
 
-    def _detect_broad_exception_handling(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_broad_exception_handling(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect overly broad exception handling.
 
         Args:
@@ -278,9 +264,7 @@ class CodeSmellDetector(BaseAnalyzer):
                         issue_type="smell",
                         severity="high",
                         message="Bare 'except:' clause catches all exceptions",
-                        location=self._format_location(
-                            file_path, getattr(node, "lineno", 1)
-                        ),
+                        location=self._format_location(file_path, getattr(node, "lineno", 1)),
                         suggestion="Specify the exception type to catch",
                     )
                 )
@@ -290,18 +274,14 @@ class CodeSmellDetector(BaseAnalyzer):
                         issue_type="smell",
                         severity="medium",
                         message="Catching 'Exception' is too broad",
-                        location=self._format_location(
-                            file_path, getattr(node, "lineno", 1)
-                        ),
+                        location=self._format_location(file_path, getattr(node, "lineno", 1)),
                         suggestion="Catch specific exception types",
                     )
                 )
 
         return issues
 
-    def _detect_mutable_default_arguments(
-        self, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_mutable_default_arguments(self, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect mutable default arguments.
 
         Args:

@@ -298,9 +298,7 @@ def func2():
 """
         metrics = analyzer.calculate_metrics(code)
 
-        maintainability = next(
-            (m for m in metrics if m.name == "maintainability_index"), None
-        )
+        maintainability = next((m for m in metrics if m.name == "maintainability_index"), None)
         assert maintainability is not None
         assert 0 <= maintainability.value <= 100
 
@@ -351,9 +349,7 @@ def func2():
 """
         metrics = analyzer.calculate_metrics(code)
 
-        avg_length = next(
-            (m for m in metrics if m.name == "avg_function_length"), None
-        )
+        avg_length = next((m for m in metrics if m.name == "avg_function_length"), None)
         assert avg_length is not None
         assert avg_length.value > 0
 

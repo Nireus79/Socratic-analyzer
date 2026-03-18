@@ -20,7 +20,7 @@ class TestPatternAnalyzer:
 
     def test_singleton_pattern_detection(self, analyzer) -> None:
         """Test singleton pattern detection."""
-        code = '''
+        code = """
 class Singleton:
     _instance = None
 
@@ -32,14 +32,14 @@ class Singleton:
         if cls._instance is None:
             cls._instance = cls()
         return cls._instance
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         assert any(i.issue_type == "pattern" for i in issues)
         assert any("singleton" in i.message.lower() for i in issues)
 
     def test_factory_pattern_detection(self, analyzer) -> None:
         """Test factory pattern detection."""
-        code = '''
+        code = """
 def shape_factory(shape_type):
     if shape_type == "circle":
         return Circle()
@@ -47,27 +47,27 @@ def shape_factory(shape_type):
         return Square()
     else:
         return Rectangle()
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         assert any(i.issue_type == "pattern" for i in issues)
 
     def test_decorator_pattern_detection(self, analyzer) -> None:
         """Test decorator pattern detection."""
-        code = '''
+        code = """
 class Decorator:
     def __init__(self, wrapped):
         self.wrapped = wrapped
 
     def operation(self):
         return self.wrapped.operation()
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         # Decorator pattern should be detected
         assert isinstance(issues, list)
 
     def test_context_manager_pattern_detection(self, analyzer) -> None:
         """Test context manager pattern detection."""
-        code = '''
+        code = """
 class FileManager:
     def __init__(self, filename):
         self.filename = filename
@@ -80,13 +80,13 @@ class FileManager:
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.file:
             self.file.close()
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         assert any(i.issue_type == "pattern" for i in issues)
 
     def test_observer_pattern_detection(self, analyzer) -> None:
         """Test observer pattern detection."""
-        code = '''
+        code = """
 class Subject:
     def __init__(self):
         self._observers = []
@@ -100,37 +100,37 @@ class Subject:
     def notify(self):
         for observer in self._observers:
             observer.update()
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         assert any(i.issue_type == "pattern" for i in issues)
 
     def test_strategy_pattern_detection(self, analyzer) -> None:
         """Test strategy pattern detection."""
-        code = '''
+        code = """
 class PaymentProcessor:
     def __init__(self, strategy):
         self.strategy = strategy
 
     def process_payment(self, amount):
         return self.strategy.execute(amount)
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         # Strategy pattern should be detected by various other analyzers
         assert isinstance(issues, list)
 
     def test_callback_pattern_detection(self, analyzer) -> None:
         """Test callback pattern detection."""
-        code = '''
+        code = """
 def process_data(data, callback):
     result = do_something(data)
     callback(result)
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         assert any(i.issue_type == "pattern" for i in issues)
 
     def test_template_method_pattern_detection(self, analyzer) -> None:
         """Test template method pattern detection."""
-        code = '''
+        code = """
 class DataProcessor:
     def _validate(self):
         raise NotImplementedError
@@ -141,7 +141,7 @@ class DataProcessor:
     def execute(self):
         self._validate()
         self._process()
-'''
+"""
         issues = analyzer.analyze(code, "test.py")
         assert any(i.issue_type == "pattern" for i in issues)
 

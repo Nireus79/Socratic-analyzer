@@ -121,9 +121,7 @@ class SocraticAnalyzerSkill:
         quality_report = QualityScorer.create_quality_report(analysis)
         return quality_report["overall_score"]
 
-    def get_quality_report(
-        self, code: str, file_path: str = "unknown.py"
-    ) -> Dict[str, Any]:
+    def get_quality_report(self, code: str, file_path: str = "unknown.py") -> Dict[str, Any]:
         """Get comprehensive quality report.
 
         Args:
@@ -161,9 +159,7 @@ class SocraticAnalyzerSkill:
         analysis = self.client.analyze_code(code)
         return analysis.patterns
 
-    def detect_issues(
-        self, code: str, severity: Optional[str] = None
-    ) -> List[Dict[str, Any]]:
+    def detect_issues(self, code: str, severity: Optional[str] = None) -> List[Dict[str, Any]]:
         """Detect issues in code.
 
         Args:
@@ -206,9 +202,7 @@ class SocraticAnalyzerSkill:
         analysis = self.client.analyze_code(code, file_path)
         return self.client.generate_report(analysis, format=format)
 
-    def check_quality_threshold(
-        self, code: str, threshold: float = 70.0
-    ) -> Dict[str, Any]:
+    def check_quality_threshold(self, code: str, threshold: float = 70.0) -> Dict[str, Any]:
         """Check if code meets quality threshold.
 
         Args:

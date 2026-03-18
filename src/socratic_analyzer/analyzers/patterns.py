@@ -99,9 +99,7 @@ class PatternAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_factory_pattern(
-        self, code: str, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_factory_pattern(self, code: str, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect Factory pattern usage.
 
         Args:
@@ -126,11 +124,15 @@ class PatternAnalyzer(BaseAnalyzer):
                 if isinstance(item, ast.Return) and item.value:
                     if isinstance(item.value, ast.Call):
                         returns_objects = True
-                elif isinstance(item, ast.If) or (hasattr(ast, 'Match') and isinstance(item, ast.Match)):
+                elif isinstance(item, ast.If) or (
+                    hasattr(ast, "Match") and isinstance(item, ast.Match)
+                ):
                     has_conditional_logic = True
 
-            if returns_objects and has_conditional_logic and node.name.endswith(
-                ("factory", "create", "build")
+            if (
+                returns_objects
+                and has_conditional_logic
+                and node.name.endswith(("factory", "create", "build"))
             ):
                 issues.append(
                     CodeIssue(
@@ -170,21 +172,14 @@ class PatternAnalyzer(BaseAnalyzer):
             for item in node.body:
                 if isinstance(item, ast.FunctionDef) and item.name == "__init__":
                     args = [arg.arg for arg in item.args.args if arg.arg != "self"]
-                    if any(
-                        "wrap" in arg or "obj" in arg or "component" in arg
-                        for arg in args
-                    ):
+                    if any("wrap" in arg or "obj" in arg or "component" in arg for arg in args):
                         has_wrapped_param = True
 
-                elif isinstance(item, ast.FunctionDef) and not item.name.startswith(
-                    "_"
-                ):
+                elif isinstance(item, ast.FunctionDef) and not item.name.startswith("_"):
                     # Check if delegates to wrapped object
                     for child in ast.walk(item):
                         if isinstance(child, ast.Attribute):
-                            if hasattr(child, "value") and isinstance(
-                                child.value, ast.Name
-                            ):
+                            if hasattr(child, "value") and isinstance(child.value, ast.Name):
                                 if child.value.id in ("wrapped", "component", "obj"):
                                     has_delegate_methods = True
 
@@ -243,9 +238,7 @@ class PatternAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_callback_pattern(
-        self, code: str, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_callback_pattern(self, code: str, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect Callback pattern usage.
 
         Args:
@@ -279,9 +272,7 @@ class PatternAnalyzer(BaseAnalyzer):
                                         issue_type="pattern",
                                         severity="info",
                                         message=f"Callback pattern detected in function '{node.name}'",
-                                        location=self._format_location(
-                                            file_path, node.lineno
-                                        ),
+                                        location=self._format_location(file_path, node.lineno),
                                         suggestion="Document expected callback signature and when it's called",
                                     )
                                 )
@@ -289,9 +280,7 @@ class PatternAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_observer_pattern(
-        self, code: str, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_observer_pattern(self, code: str, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect Observer pattern usage.
 
         Args:
@@ -334,9 +323,7 @@ class PatternAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _detect_strategy_pattern(
-        self, code: str, file_path: str, tree: ast.AST
-    ) -> List[CodeIssue]:
+    def _detect_strategy_pattern(self, code: str, file_path: str, tree: ast.AST) -> List[CodeIssue]:
         """Detect Strategy pattern usage.
 
         Args:
@@ -366,9 +353,7 @@ class PatternAnalyzer(BaseAnalyzer):
                         # Check if strategy is used
                         for child in ast.walk(item):
                             if isinstance(child, ast.Attribute):
-                                if hasattr(child, "value") and isinstance(
-                                    child.value, ast.Name
-                                ):
+                                if hasattr(child, "value") and isinstance(child.value, ast.Name):
                                     if "strategy" in child.value.id:
                                         uses_strategy = True
 

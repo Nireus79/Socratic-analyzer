@@ -22,7 +22,7 @@ class DependencyValidator:
 
     def _validate_python(self, code: str) -> dict:
         """Find Python imports"""
-        imports = set(re.findall(r'^(?:from|import)\s+(\w+)', code, re.MULTILINE))
+        imports = set(re.findall(r"^(?:from|import)\s+(\w+)", code, re.MULTILINE))
         return {"found_imports": list(imports), "language": "python"}
 
     def _validate_javascript(self, code: str) -> dict:

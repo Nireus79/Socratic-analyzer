@@ -24,14 +24,16 @@ class CodeStructureAnalyzer:
             tree = ast.parse(code)
             classes = [node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]
             functions = [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-            imports = [node.names[0].name for node in ast.walk(tree) if isinstance(node, ast.Import)]
+            imports = [
+                node.names[0].name for node in ast.walk(tree) if isinstance(node, ast.Import)
+            ]
 
             return {
                 "classes": classes,
                 "functions": functions,
                 "imports": imports,
                 "language": "python",
-                "lines_of_code": len(code.split('\n')),
+                "lines_of_code": len(code.split("\n")),
             }
         except SyntaxError as e:
             logger.error(f"Failed to analyze Python code: {e}")

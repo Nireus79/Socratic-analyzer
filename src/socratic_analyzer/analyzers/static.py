@@ -96,9 +96,7 @@ class StaticAnalyzer(BaseAnalyzer):
                 # Check usage (simplified)
                 used_vars = set()
                 for child in ast.walk(node):
-                    if isinstance(child, ast.Name) and isinstance(
-                        child.ctx, ast.Load
-                    ):
+                    if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Load):
                         used_vars.add(child.id)
 
                 # Find unused
@@ -168,7 +166,9 @@ class StaticAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _check_long_lines(self, code: str, file_path: str, max_length: int = 120) -> List[CodeIssue]:
+    def _check_long_lines(
+        self, code: str, file_path: str, max_length: int = 120
+    ) -> List[CodeIssue]:
         """Check for lines exceeding max length.
 
         Args:
@@ -217,17 +217,20 @@ class StaticAnalyzer(BaseAnalyzer):
 
                 # Filter out docstrings
                 body_without_docs = [
-                    n for n in body if not isinstance(n, ast.Expr) or
-                    not isinstance(n.value, ast.Constant)
+                    n
+                    for n in body
+                    if not isinstance(n, ast.Expr) or not isinstance(n.value, ast.Constant)
                 ]
 
                 # Check for only pass statements
                 if len(body_without_docs) == 0 or all(
                     isinstance(n, ast.Pass) for n in body_without_docs
                 ):
-                    node_type = "Function" if isinstance(
-                        node, (ast.FunctionDef, ast.AsyncFunctionDef)
-                    ) else "Class"
+                    node_type = (
+                        "Function"
+                        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                        else "Class"
+                    )
 
                     issues.append(
                         CodeIssue(

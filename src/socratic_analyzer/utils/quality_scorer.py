@@ -185,9 +185,7 @@ class QualityScorer:
                 f"Refactor {complexity_issues} complex function(s) into smaller units"
             )
 
-        performance_issues = sum(
-            1 for i in analysis.issues if i.issue_type == "performance"
-        )
+        performance_issues = sum(1 for i in analysis.issues if i.issue_type == "performance")
         if performance_issues > 0:
             suggestions.append(
                 f"Optimize {performance_issues} performance issue(s) for better efficiency"

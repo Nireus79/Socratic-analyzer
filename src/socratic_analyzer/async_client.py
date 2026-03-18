@@ -29,9 +29,7 @@ class AsyncAnalyzerClient(AnalyzerClient):
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(None, self.analyze_file, file_path)
 
-    async def analyze_code_async(
-        self, code: str, file_path: str = "unknown.py"
-    ) -> Analysis:
+    async def analyze_code_async(self, code: str, file_path: str = "unknown.py") -> Analysis:
         """Analyze Python code asynchronously.
 
         Args:
@@ -42,9 +40,7 @@ class AsyncAnalyzerClient(AnalyzerClient):
             Analysis object with results
         """
         loop = asyncio.get_event_loop()
-        return await loop.run_in_executor(
-            None, self.analyze_code, code, file_path
-        )
+        return await loop.run_in_executor(None, self.analyze_code, code, file_path)
 
     async def analyze_files_async(self, file_paths: List[str]) -> List[Analysis]:
         """Analyze multiple Python files asynchronously.
@@ -62,9 +58,7 @@ class AsyncAnalyzerClient(AnalyzerClient):
         tasks = [self.analyze_file_async(fp) for fp in file_paths]
         return await asyncio.gather(*tasks)
 
-    async def batch_analyze_code_async(
-        self, code_samples: List[tuple]
-    ) -> List[Analysis]:
+    async def batch_analyze_code_async(self, code_samples: List[tuple]) -> List[Analysis]:
         """Analyze multiple code samples asynchronously.
 
         Args:
@@ -73,15 +67,10 @@ class AsyncAnalyzerClient(AnalyzerClient):
         Returns:
             List of Analysis objects
         """
-        tasks = [
-            self.analyze_code_async(code, fp or "unknown.py")
-            for code, fp in code_samples
-        ]
+        tasks = [self.analyze_code_async(code, fp or "unknown.py") for code, fp in code_samples]
         return await asyncio.gather(*tasks)
 
-    async def generate_report_async(
-        self, analysis: Analysis, format: str = "text"
-    ) -> str:
+    async def generate_report_async(self, analysis: Analysis, format: str = "text") -> str:
         """Generate formatted report asynchronously.
 
         Args:
@@ -92,9 +81,7 @@ class AsyncAnalyzerClient(AnalyzerClient):
             Formatted report string
         """
         loop = asyncio.get_event_loop()
-        return await loop.run_in_executor(
-            None, self.generate_report, analysis, format
-        )
+        return await loop.run_in_executor(None, self.generate_report, analysis, format)
 
     async def get_recommendations_async(self, analysis: Analysis) -> List[str]:
         """Get actionable recommendations asynchronously.

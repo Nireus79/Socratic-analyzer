@@ -27,7 +27,11 @@ class SyntaxValidator:
             compile(code, "<string>", "exec")
             return {"valid": True, "errors": [], "language": "python"}
         except SyntaxError as e:
-            return {"valid": False, "errors": [{"line": e.lineno, "message": str(e)}], "language": "python"}
+            return {
+                "valid": False,
+                "errors": [{"line": e.lineno, "message": str(e)}],
+                "language": "python",
+            }
 
     def _validate_javascript(self, code: str) -> dict:
         """Validate JavaScript syntax"""

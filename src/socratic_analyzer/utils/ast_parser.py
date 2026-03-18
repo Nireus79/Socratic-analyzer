@@ -129,11 +129,7 @@ class ASTAnalyzer:
         docstring = ast.get_docstring(class_node) or ""
 
         # Get methods
-        methods = [
-            node.name
-            for node in class_node.body
-            if isinstance(node, ast.FunctionDef)
-        ]
+        methods = [node.name for node in class_node.body if isinstance(node, ast.FunctionDef)]
 
         # Get base classes
         bases = []

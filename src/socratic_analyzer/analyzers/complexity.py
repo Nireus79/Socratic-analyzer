@@ -186,9 +186,7 @@ class ComplexityAnalyzer(BaseAnalyzer):
                             CodeIssue(
                                 issue_type="complexity",
                                 severity="high" if complexity > 15 else "medium",
-                                location=self._format_location(
-                                    file_path, item.lineno
-                                ),
+                                location=self._format_location(file_path, item.lineno),
                                 message=(
                                     f"Method '{cls.name}.{item.name}' is too complex (CC: {complexity})"
                                 ),

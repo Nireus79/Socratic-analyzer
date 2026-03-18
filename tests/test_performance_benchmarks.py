@@ -204,10 +204,7 @@ class Class_{i}:
         """Test speed of analyzing multiple code samples."""
         import time
 
-        codes = [
-            f"def func_{i}(x):\n    return x * {i}\n"
-            for i in range(5)
-        ]
+        codes = [f"def func_{i}(x):\n    return x * {i}\n" for i in range(5)]
 
         start = time.time()
         results = [client.analyze_code(code, f"file_{i}.py") for i, code in enumerate(codes)]

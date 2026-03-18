@@ -30,9 +30,7 @@ class AnalyzerClient:
 
         # Initialize analyzers
         self._static_analyzer = StaticAnalyzer()
-        self._complexity_analyzer = ComplexityAnalyzer(
-            max_complexity=self.config.max_complexity
-        )
+        self._complexity_analyzer = ComplexityAnalyzer(max_complexity=self.config.max_complexity)
         self._metrics_analyzer = MetricsAnalyzer()
         self._import_analyzer = ImportAnalyzer()
         self._pattern_analyzer = PatternAnalyzer()
@@ -165,9 +163,7 @@ class AnalyzerClient:
 
         return patterns
 
-    def generate_report(
-        self, analysis: Analysis, format: str = "text"
-    ) -> str:
+    def generate_report(self, analysis: Analysis, format: str = "text") -> str:
         """Generate formatted report.
 
         Args:
@@ -232,9 +228,7 @@ class AnalyzerClient:
             lines.append("METRICS")
             for metric in analysis.metrics:
                 status_indicator = "[OK]" if metric.status == "ok" else "[!]"
-                lines.append(
-                    f"  {status_indicator} {metric.name}: {metric.value:.1f}"
-                )
+                lines.append(f"  {status_indicator} {metric.name}: {metric.value:.1f}")
                 if metric.description:
                     lines.append(f"    {metric.description}")
             lines.append("")
@@ -310,9 +304,7 @@ class AnalyzerClient:
 
         # Summary
         lines.append("## Summary")
-        lines.append(
-            f"- **File size**: {analysis.file_size:,} bytes"
-        )
+        lines.append(f"- **File size**: {analysis.file_size:,} bytes")
         lines.append(f"- **Language**: {analysis.language}")
         lines.append(f"- **Issues**: {analysis.total_issues}")
         lines.append(f"  - Critical: {analysis.critical_issues}")
@@ -362,8 +354,7 @@ class AnalyzerClient:
             lines.append("## Metrics")
             for metric in analysis.metrics:
                 lines.append(
-                    f"- **{metric.name}**: {metric.value:.1f} "
-                    f"(status: {metric.status})"
+                    f"- **{metric.name}**: {metric.value:.1f} " f"(status: {metric.status})"
                 )
             lines.append("")
 
@@ -396,16 +387,12 @@ class AnalyzerClient:
         # Critical issues
         critical_count = analysis.critical_issues
         if critical_count > 0:
-            recommendations.append(
-                f"[CRITICAL] Fix {critical_count} critical issue(s) immediately"
-            )
+            recommendations.append(f"[CRITICAL] Fix {critical_count} critical issue(s) immediately")
 
         # High severity issues
         high_count = analysis.high_issues
         if high_count > 0:
-            recommendations.append(
-                f"[HIGH] Address {high_count} high-severity issue(s)"
-            )
+            recommendations.append(f"[HIGH] Address {high_count} high-severity issue(s)")
 
         # Complexity issues
         complexity_issues = [i for i in analysis.issues if i.issue_type == "complexity"]
@@ -431,18 +418,12 @@ class AnalyzerClient:
         # Pattern-related recommendations
         pattern_issues = [i for i in analysis.issues if i.issue_type == "pattern"]
         if pattern_issues:
-            recommendations.append(
-                f"[PATTERNS] Review {len(pattern_issues)} design pattern(s)"
-            )
+            recommendations.append(f"[PATTERNS] Review {len(pattern_issues)} design pattern(s)")
 
         # Documentation issues
-        doc_issues = [
-            i for i in analysis.issues if "docstring" in i.message.lower()
-        ]
+        doc_issues = [i for i in analysis.issues if "docstring" in i.message.lower()]
         if doc_issues:
-            recommendations.append(
-                f"[DOCS] Add documentation to {len(doc_issues)} item(s)"
-            )
+            recommendations.append(f"[DOCS] Add documentation to {len(doc_issues)} item(s)")
 
         # Style issues
         style_issues = [i for i in analysis.issues if i.issue_type == "style"]

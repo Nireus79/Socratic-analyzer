@@ -65,7 +65,9 @@ class Analysis:
 
     def __repr__(self) -> str:
         """Return string representation."""
-        return f"Analysis({self.file_path}, issues={self.total_issues}, patterns={len(self.patterns)})"
+        return (
+            f"Analysis({self.file_path}, issues={self.total_issues}, patterns={len(self.patterns)})"
+        )
 
 
 @dataclass

@@ -101,8 +101,7 @@ class SocraticAnalyzerTool(BaseTool):
                 result_lines.append("\nTop Issues:")
                 for issue in analysis.issues[:5]:
                     result_lines.append(
-                        f"  - {issue.severity.upper()}: {issue.message} "
-                        f"({issue.location})"
+                        f"  - {issue.severity.upper()}: {issue.message} " f"({issue.location})"
                     )
 
             return "\n".join(result_lines)
@@ -190,8 +189,7 @@ class SocraticAnalyzerIssuesTool(BaseTool):
 
             for i, issue in enumerate(analysis.issues, 1):
                 result_lines.append(
-                    f"{i}. [{issue.severity.upper()}] {issue.message} "
-                    f"at {issue.location}"
+                    f"{i}. [{issue.severity.upper()}] {issue.message} " f"at {issue.location}"
                 )
                 if issue.suggestion:
                     result_lines.append(f"   Suggestion: {issue.suggestion}")

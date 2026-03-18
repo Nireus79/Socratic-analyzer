@@ -79,7 +79,7 @@ def function_two(y):
     )
 
     (project_dir / "module2.py").write_text(
-        '''
+        """
 class MyClass:
     def __init__(self):
         self.value = 0
@@ -89,7 +89,7 @@ class MyClass:
 
     def get_value(self):
         return self.value
-'''
+"""
     )
 
     return project_dir
