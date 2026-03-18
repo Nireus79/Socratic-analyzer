@@ -5,10 +5,10 @@ import pytest
 # Try to import LangChain tools
 try:
     from socratic_analyzer.integrations.langchain import (
-        SocraticAnalyzerTool,
-        SocraticAnalyzerQualityTool,
         SocraticAnalyzerIssuesTool,
+        SocraticAnalyzerQualityTool,
         SocraticAnalyzerRecommendationsTool,
+        SocraticAnalyzerTool,
         create_analyzer_tools,
     )
 

@@ -1,15 +1,15 @@
 """LangChain tool integration for Socratic Analyzer."""
 
-from typing import Dict, Any, Optional, Union
+from typing import Any, Optional
 
 try:
-    from langchain.tools import BaseTool
     from langchain.callbacks.manager import CallbackManagerToolRun
+    from langchain.tools import BaseTool
 except ImportError:
     # Fallback for newer LangChain versions
     try:
-        from langchain_core.tools import BaseTool
         from langchain_core.callbacks.manager import CallbackManagerToolRun
+        from langchain_core.tools import BaseTool
     except ImportError:
         BaseTool = object  # type: ignore
         CallbackManagerToolRun = None  # type: ignore

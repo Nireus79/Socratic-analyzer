@@ -5,11 +5,11 @@ from typing import List, Optional
 from socratic_analyzer.analyzers.complexity import ComplexityAnalyzer
 from socratic_analyzer.analyzers.imports import ImportAnalyzer
 from socratic_analyzer.analyzers.metrics import MetricsAnalyzer
-from socratic_analyzer.analyzers.static import StaticAnalyzer
 from socratic_analyzer.analyzers.patterns import PatternAnalyzer
-from socratic_analyzer.analyzers.smells import CodeSmellDetector
 from socratic_analyzer.analyzers.performance import PerformanceAnalyzer
-from socratic_analyzer.models import Analysis, AnalyzerConfig, CodeIssue, MetricResult
+from socratic_analyzer.analyzers.smells import CodeSmellDetector
+from socratic_analyzer.analyzers.static import StaticAnalyzer
+from socratic_analyzer.models import Analysis, AnalyzerConfig, CodeIssue
 from socratic_analyzer.utils.quality_scorer import QualityScorer
 
 
@@ -53,12 +53,12 @@ class AnalyzerClient:
             IOError: If file can't be read
         """
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 code = f.read()
         except FileNotFoundError:
             raise FileNotFoundError(f"File not found: {file_path}")
-        except IOError as e:
-            raise IOError(f"Error reading file {file_path}: {e}")
+        except OSError as e:
+            raise OSError(f"Error reading file {file_path}: {e}")
 
         return self.analyze_code(code, file_path)
 
@@ -259,7 +259,6 @@ class AnalyzerClient:
             JSON report
         """
         import json
-        from datetime import datetime
 
         data = {
             "file_path": analysis.file_path,

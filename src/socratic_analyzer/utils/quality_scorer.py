@@ -2,7 +2,7 @@
 
 from typing import List
 
-from socratic_analyzer.models import Analysis, MetricResult
+from socratic_analyzer.models import Analysis
 
 
 class QualityScorer:
@@ -169,7 +169,6 @@ class QualityScorer:
         # Count issues by severity
         critical_count = sum(1 for i in analysis.issues if i.severity == "critical")
         high_count = sum(1 for i in analysis.issues if i.severity == "high")
-        medium_count = sum(1 for i in analysis.issues if i.severity == "medium")
 
         # Generate suggestions
         if critical_count > 0:

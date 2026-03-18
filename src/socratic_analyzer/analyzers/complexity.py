@@ -1,7 +1,7 @@
 """Complexity analysis including cyclomatic complexity."""
 
 import ast
-from typing import List, Optional
+from typing import List
 
 from socratic_analyzer.analyzers.base import BaseAnalyzer
 from socratic_analyzer.models import CodeIssue
@@ -124,8 +124,6 @@ class ComplexityAnalyzer(BaseAnalyzer):
             List of issues
         """
         issues = []
-        max_depth = 0
-        max_depth_node = None
 
         for func in ASTAnalyzer.get_functions(tree):
             depth, node = self._get_max_nesting_depth(func)

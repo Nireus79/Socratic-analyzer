@@ -1,7 +1,8 @@
 """Tests for data models."""
 
-import pytest
 from datetime import datetime, timezone
+
+import pytest
 
 from socratic_analyzer import (
     Analysis,
@@ -9,7 +10,6 @@ from socratic_analyzer import (
     CodeIssue,
     MetricResult,
     ProjectAnalysis,
-    ConfigurationError,
 )
 
 

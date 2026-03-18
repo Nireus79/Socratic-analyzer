@@ -203,7 +203,7 @@ class Singleton:
         skill = SocraticAnalyzerSkill(max_complexity=5, include_metrics=False)
 
         code = "if x: pass\n"
-        analysis = skill.client.analyze_code(code)
+        _ = skill.client.analyze_code(code)
 
         # Should respect custom config
         assert skill.client.config.max_complexity == 5

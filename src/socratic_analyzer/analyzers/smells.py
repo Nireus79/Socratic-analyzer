@@ -3,8 +3,8 @@
 import ast
 from typing import List
 
-from socratic_analyzer.models import CodeIssue
 from socratic_analyzer.analyzers.base import BaseAnalyzer
+from socratic_analyzer.models import CodeIssue
 
 
 class CodeSmellDetector(BaseAnalyzer):

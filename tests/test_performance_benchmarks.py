@@ -1,6 +1,7 @@
 """Performance benchmarks for Socratic Analyzer."""
 
 import pytest
+
 from socratic_analyzer.client import AnalyzerClient
 
 

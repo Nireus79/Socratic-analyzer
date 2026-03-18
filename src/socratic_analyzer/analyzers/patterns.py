@@ -1,10 +1,10 @@
 """Pattern analysis for code anti-patterns and design pattern detection."""
 
 import ast
-from typing import List, Set, Dict, Tuple
+from typing import List
 
-from socratic_analyzer.models import CodeIssue
 from socratic_analyzer.analyzers.base import BaseAnalyzer
+from socratic_analyzer.models import CodeIssue
 
 
 class PatternAnalyzer(BaseAnalyzer):

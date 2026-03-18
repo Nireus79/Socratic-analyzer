@@ -1,13 +1,10 @@
 """Tests for analyzer client."""
 
-import asyncio
 import json
-import tempfile
-from pathlib import Path
 
 import pytest
 
-from socratic_analyzer import AnalyzerConfig, Analysis
+from socratic_analyzer import Analysis, AnalyzerConfig
 from socratic_analyzer.async_client import AsyncAnalyzerClient
 from socratic_analyzer.client import AnalyzerClient
 

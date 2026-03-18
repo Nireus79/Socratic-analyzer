@@ -1,9 +1,9 @@
 """Openclaw skill for Socratic Analyzer."""
 
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
 
 from socratic_analyzer.client import AnalyzerClient
-from socratic_analyzer.models import AnalyzerConfig, Analysis
+from socratic_analyzer.models import Analysis, AnalyzerConfig
 from socratic_analyzer.utils.quality_scorer import QualityScorer
 
 
@@ -84,7 +84,7 @@ class SocraticAnalyzerSkill:
                 # Calculate quality score
                 quality_report = QualityScorer.create_quality_report(analysis)
                 scores.append(quality_report["overall_score"])
-            except (FileNotFoundError, IOError) as e:
+            except (OSError, FileNotFoundError) as e:
                 results.append(
                     {
                         "file_path": file_path,

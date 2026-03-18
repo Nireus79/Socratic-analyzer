@@ -1,10 +1,10 @@
 """Async analyzer client interface."""
 
 import asyncio
-from typing import List, Optional
+from typing import List
 
 from socratic_analyzer.client import AnalyzerClient
-from socratic_analyzer.models import Analysis, AnalyzerConfig
+from socratic_analyzer.models import Analysis
 
 
 class AsyncAnalyzerClient(AnalyzerClient):

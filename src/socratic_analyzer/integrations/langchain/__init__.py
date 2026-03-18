@@ -1,10 +1,10 @@
 """LangChain integration for Socratic Analyzer."""
 
 from socratic_analyzer.integrations.langchain.tool import (
-    SocraticAnalyzerTool,
-    SocraticAnalyzerQualityTool,
     SocraticAnalyzerIssuesTool,
+    SocraticAnalyzerQualityTool,
     SocraticAnalyzerRecommendationsTool,
+    SocraticAnalyzerTool,
     create_analyzer_tools,
 )
 

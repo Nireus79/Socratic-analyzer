@@ -1,6 +1,5 @@
 """Code metrics analyzer."""
 
-import ast
 from typing import List
 
 from socratic_analyzer.analyzers.base import BaseAnalyzer
