@@ -196,6 +196,10 @@ agent = initialize_agent(
 - Recommendation generator
 - LLM integration for intelligent insights
 
+## Documentation
+
+- **[Code Analysis Guide](docs/CODE_ANALYSIS_GUIDE.md)** - Complete guide to code analysis, validation tools, testing integration, maturity assessment, and code review strategies
+
 ## Configuration
 
 ```python
