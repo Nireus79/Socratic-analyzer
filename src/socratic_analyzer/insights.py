@@ -36,7 +36,7 @@ class InsightGenerator:
             "security",
             "maintainability",
             "testing",
-            "documentation"
+            "documentation",
         ]
 
     def generate_insights(self, analysis_data: Dict[str, Any]) -> List[InsightData]:
@@ -53,39 +53,47 @@ class InsightGenerator:
 
         # Extract issues and convert to insights
         for issue in analysis_data.get("issues", []):
-            insights.append(InsightData(
-                category="code_quality",
-                title="Code Quality Issue",
-                description=issue,
-                severity="warning"
-            ))
+            insights.append(
+                InsightData(
+                    category="code_quality",
+                    title="Code Quality Issue",
+                    description=issue,
+                    severity="warning",
+                )
+            )
 
         # Extract improvements
         for improvement in analysis_data.get("improvements", []):
-            insights.append(InsightData(
-                category="maintainability",
-                title="Improvement Opportunity",
-                description=improvement,
-                severity="info"
-            ))
+            insights.append(
+                InsightData(
+                    category="maintainability",
+                    title="Improvement Opportunity",
+                    description=improvement,
+                    severity="info",
+                )
+            )
 
         # Extract security concerns
         for concern in analysis_data.get("security_concerns", []):
-            insights.append(InsightData(
-                category="security",
-                title="Security Concern",
-                description=concern,
-                severity="critical"
-            ))
+            insights.append(
+                InsightData(
+                    category="security",
+                    title="Security Concern",
+                    description=concern,
+                    severity="critical",
+                )
+            )
 
         # Extract performance concerns
         for concern in analysis_data.get("performance_concerns", []):
-            insights.append(InsightData(
-                category="performance",
-                title="Performance Issue",
-                description=concern,
-                severity="warning"
-            ))
+            insights.append(
+                InsightData(
+                    category="performance",
+                    title="Performance Issue",
+                    description=concern,
+                    severity="warning",
+                )
+            )
 
         logger.info(f"Generated {len(insights)} insights from analysis data")
         return insights
@@ -102,13 +110,7 @@ class InsightGenerator:
         """
         severity_order = {"critical": 0, "warning": 1, "info": 2}
 
-        return sorted(
-            insights,
-            key=lambda x: (
-                severity_order.get(x.severity, 3),
-                not x.actionable
-            )
-        )
+        return sorted(insights, key=lambda x: (severity_order.get(x.severity, 3), not x.actionable))
 
     def summarize_insights(self, insights: List[InsightData]) -> Dict[str, int]:
         """

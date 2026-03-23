@@ -51,6 +51,7 @@ class CodeAnalyzer:
         """Initialize LLM client for analysis."""
         try:
             from anthropic import Anthropic
+
             self.llm_client = Anthropic()
             logger.info("Code analyzer initialized with Anthropic client")
         except ImportError:
@@ -81,9 +82,10 @@ class CodeAnalyzer:
             response = self.llm_client.messages.create(
                 model="claude-3-5-sonnet-20241022",
                 max_tokens=2000,
-                messages=[{
-                    "role": "user",
-                    "content": f"""Analyze this {language} code and provide:
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f"""Analyze this {language} code and provide:
 1. Issues found
 2. Suggested improvements
 3. Security concerns
@@ -95,8 +97,9 @@ Code:
 {code}
 ```
 
-Format response as JSON with keys: issues, improvements, security_concerns, performance_concerns, recommendations"""
-                }]
+Format response as JSON with keys: issues, improvements, security_concerns, performance_concerns, recommendations""",
+                    }
+                ],
             )
 
             # Parse response (in a real implementation, we'd parse the JSON)

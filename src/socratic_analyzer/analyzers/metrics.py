@@ -117,7 +117,7 @@ class MetricsAnalyzer(BaseAnalyzer):
         Returns:
             List of metrics
         """
-        metrics: list[Metric] = []
+        metrics: list[MetricResult] = []
 
         # Simple maintainability calculation
         # Based on: lines of code, cyclomatic complexity, Halstead metrics
@@ -174,7 +174,7 @@ class MetricsAnalyzer(BaseAnalyzer):
         Returns:
             List of metrics
         """
-        metrics: list[Metric] = []
+        metrics: list[MetricResult] = []
 
         tree = ASTAnalyzer.parse_code(code)
         if tree is None:

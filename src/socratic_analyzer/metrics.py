@@ -43,9 +43,7 @@ class MetricsCalculator:
         """
         # Simple heuristic: count control flow statements
         control_flow_keywords = ["if", "else", "elif", "for", "while", "try", "except", "case"]
-        keyword_count = sum(
-            code.lower().count(keyword) for keyword in control_flow_keywords
-        )
+        keyword_count = sum(code.lower().count(keyword) for keyword in control_flow_keywords)
         lines = len(code.split("\n"))
 
         # Normalize to 0-1 range
@@ -99,7 +97,7 @@ class MetricsCalculator:
         maintainability: float,
         security: float,
         performance: float,
-        documentation: float
+        documentation: float,
     ) -> float:
         """
         Calculate overall quality score.
@@ -123,18 +121,18 @@ class MetricsCalculator:
             "maintainability": 0.25,
             "security": 0.30,
             "performance": 0.15,
-            "documentation": 0.15
+            "documentation": 0.15,
         }
 
         # Lower complexity is better (invert the score)
         complexity_score = 1.0 - complexity
 
         overall = (
-            complexity_score * weights["complexity"] +
-            maintainability_normalized * weights["maintainability"] +
-            security * weights["security"] +
-            performance * weights["performance"] +
-            documentation * weights["documentation"]
+            complexity_score * weights["complexity"]
+            + maintainability_normalized * weights["maintainability"]
+            + security * weights["security"]
+            + performance * weights["performance"]
+            + documentation * weights["documentation"]
         )
 
         return round(overall, 2)
@@ -145,7 +143,7 @@ class MetricsCalculator:
         security_issues: int = 0,
         performance_issues: int = 0,
         test_coverage: float = 0.0,
-        documentation_present: bool = False
+        documentation_present: bool = False,
     ) -> QualityMetrics:
         """
         Calculate all quality metrics for given code.
@@ -167,11 +165,7 @@ class MetricsCalculator:
         documentation_score = 0.8 if documentation_present else 0.3
 
         overall = MetricsCalculator.calculate_overall_quality(
-            complexity,
-            maintainability,
-            security_score,
-            performance_score,
-            documentation_score
+            complexity, maintainability, security_score, performance_score, documentation_score
         )
 
         return QualityMetrics(
@@ -181,5 +175,5 @@ class MetricsCalculator:
             security_score=security_score,
             performance_score=performance_score,
             documentation_score=documentation_score,
-            overall_quality=overall
+            overall_quality=overall,
         )
