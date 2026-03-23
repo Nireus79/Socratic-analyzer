@@ -64,7 +64,7 @@ class SocraticAnalyzerTool(BaseTool):
     def _run(
         self,
         code: str,
-        run_manager: Optional[CallbackManagerToolRun] = None,
+        run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
         """Run the tool synchronously.
 
@@ -144,7 +144,7 @@ class SocraticAnalyzerQualityTool(BaseTool):
         super().__init__(**kwargs)
         self.client = AnalyzerClient()
 
-    def _run(self, code: str, run_manager: Optional[CallbackManagerToolRun] = None) -> str:
+    def _run(self, code: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         """Run the tool synchronously."""
         try:
             analysis = self.client.analyze_code(code)
@@ -177,7 +177,7 @@ class SocraticAnalyzerIssuesTool(BaseTool):
         super().__init__(**kwargs)
         self.client = AnalyzerClient()
 
-    def _run(self, code: str, run_manager: Optional[CallbackManagerToolRun] = None) -> str:
+    def _run(self, code: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         """Run the tool synchronously."""
         try:
             analysis = self.client.analyze_code(code)
@@ -221,7 +221,7 @@ class SocraticAnalyzerRecommendationsTool(BaseTool):
         super().__init__(**kwargs)
         self.client = AnalyzerClient()
 
-    def _run(self, code: str, run_manager: Optional[CallbackManagerToolRun] = None) -> str:
+    def _run(self, code: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         """Run the tool synchronously."""
         try:
             analysis = self.client.analyze_code(code)
