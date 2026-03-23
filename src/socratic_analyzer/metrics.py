@@ -3,7 +3,6 @@ Code quality metrics calculation.
 """
 
 import logging
-from typing import Dict
 
 from pydantic import BaseModel, Field
 

@@ -3,7 +3,7 @@ Code analyzer using LLM-powered insights.
 """
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import List
 
 from pydantic import BaseModel, Field
 
@@ -79,7 +79,8 @@ class CodeAnalyzer:
 
         try:
             # Use Claude to analyze the code
-            response = self.llm_client.messages.create(
+            # In a real implementation, we'd parse the response
+            self.llm_client.messages.create(
                 model="claude-3-5-sonnet-20241022",
                 max_tokens=2000,
                 messages=[
@@ -101,9 +102,6 @@ Format response as JSON with keys: issues, improvements, security_concerns, perf
                     }
                 ],
             )
-
-            # Parse response (in a real implementation, we'd parse the JSON)
-            response_text = response.content[0].text
 
             # Set default quality and complexity scores
             result.quality_score = 0.75

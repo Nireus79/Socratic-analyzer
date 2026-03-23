@@ -1,18 +1,20 @@
 """LangChain tool integration for Socratic Analyzer."""
 
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 try:
-    from langchain.tools import BaseTool
     from langchain.callbacks.manager import CallbackManagerForToolRun
+    from langchain.tools import BaseTool
 except ImportError:
     # Fallback for newer LangChain versions
     try:
+        from langchain_core.callbacks.manager import (
+            CallbackManagerForToolRun,
+        )
         from langchain_core.tools import BaseTool
-        from langchain_core.callbacks.manager import CallbackManagerForToolRun
     except ImportError:
         BaseTool = object  # type: ignore[assignment,misc]
-        CallbackManagerForToolRun = None  # type: ignore[assignment]
+        CallbackManagerForToolRun = None  # type: ignore[assignment,misc]
 
 from socratic_analyzer.client import AnalyzerClient
 from socratic_analyzer.models import AnalyzerConfig
