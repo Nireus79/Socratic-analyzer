@@ -39,7 +39,7 @@ class ComplexityAnalyzer(BaseAnalyzer):
         Returns:
             List of complexity issues
         """
-        issues = []
+        issues: list[CodeIssue] = []
 
         # Parse code
         tree = ASTAnalyzer.parse_code(code)
@@ -141,7 +141,7 @@ class ComplexityAnalyzer(BaseAnalyzer):
 
         return issues
 
-    def _get_max_nesting_depth(self, node: ast.AST, depth: int = 0) -> tuple:
+    def _get_max_nesting_depth(self, node: ast.AST, depth: int = 0) -> tuple[int, ast.AST]:
         """Get maximum nesting depth.
 
         Args:

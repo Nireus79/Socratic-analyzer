@@ -2,6 +2,7 @@
 
 import ast
 import logging
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -9,16 +10,16 @@ logger = logging.getLogger(__name__)
 class CodeStructureAnalyzer:
     """Analyze code structure using AST"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         logger.debug("CodeStructureAnalyzer initialized")
 
-    def analyze(self, code: str, language: str = "python") -> dict:
+    def analyze(self, code: str, language: str = "python") -> dict[str, Any]:
         """Analyze code structure"""
         if language == "python":
             return self._analyze_python(code)
         return {"classes": [], "functions": [], "imports": []}
 
-    def _analyze_python(self, code: str) -> dict:
+    def _analyze_python(self, code: str) -> dict[str, Any]:
         """Analyze Python code structure"""
         try:
             tree = ast.parse(code)
@@ -39,7 +40,7 @@ class CodeStructureAnalyzer:
             logger.error(f"Failed to analyze Python code: {e}")
             return {"error": str(e), "language": "python"}
 
-    def suggest_file_organization(self, code: str, language: str = "python") -> dict:
+    def suggest_file_organization(self, code: str, language: str = "python") -> dict[str, Any]:
         """Suggest file organization"""
         analysis = self.analyze(code, language)
         if "error" in analysis:

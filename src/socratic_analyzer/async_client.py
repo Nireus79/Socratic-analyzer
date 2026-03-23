@@ -58,7 +58,7 @@ class AsyncAnalyzerClient(AnalyzerClient):
         tasks = [self.analyze_file_async(fp) for fp in file_paths]
         return await asyncio.gather(*tasks)
 
-    async def batch_analyze_code_async(self, code_samples: List[tuple]) -> List[Analysis]:
+    async def batch_analyze_code_async(self, code_samples: List[tuple[str, str]]) -> List[Analysis]:
         """Analyze multiple code samples asynchronously.
 
         Args:

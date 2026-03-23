@@ -40,7 +40,7 @@ class CodeSmellDetector(BaseAnalyzer):
         Returns:
             List of CodeIssue objects for smells found
         """
-        issues = []
+        issues: list[CodeIssue] = []
 
         try:
             tree = ast.parse(code)
@@ -77,7 +77,7 @@ class CodeSmellDetector(BaseAnalyzer):
                 continue
 
             # Calculate method length
-            method_lines = node.end_lineno - node.lineno + 1
+            method_lines = (node.end_lineno or node.lineno) - node.lineno + 1
 
             if method_lines > self.max_method_length:
                 issues.append(
@@ -138,7 +138,7 @@ class CodeSmellDetector(BaseAnalyzer):
         """
         issues = []
         lines = code.split("\n")
-        seen_blocks: dict = {}
+        seen_blocks: dict[str, list[int]] = {}
 
         # Check for duplicate code blocks (simple heuristic)
         for i, line in enumerate(lines):
@@ -181,7 +181,7 @@ class CodeSmellDetector(BaseAnalyzer):
 
         # Get module-level assignments
         module_vars = set()
-        for node in tree.body:
+        for node in tree.body:  # type: ignore[attr-defined]
             if isinstance(node, ast.Assign):
                 for target in node.targets:
                     if isinstance(target, ast.Name):

@@ -79,7 +79,7 @@ class StaticAnalyzer(BaseAnalyzer):
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 # Get parameter names
-                params = set()
+                params: set[str] = set()
                 if node.args.args:
                     params.update(arg.arg for arg in node.args.args)
 
@@ -127,7 +127,7 @@ class StaticAnalyzer(BaseAnalyzer):
         issues = []
 
         # Check module docstring
-        if not ast.get_docstring(tree):
+        if not ast.get_docstring(tree):  # type: ignore[arg-type]
             issues.append(
                 CodeIssue(
                     issue_type="maintenance",

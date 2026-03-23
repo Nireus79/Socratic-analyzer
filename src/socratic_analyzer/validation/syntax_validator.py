@@ -1,6 +1,7 @@
 """Syntax Validator - Multi-language code syntax validation."""
 
 import logging
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -10,10 +11,10 @@ class SyntaxValidator:
 
     SUPPORTED_LANGUAGES = {".py": "python", ".js": "javascript", ".java": "java", ".cpp": "cpp"}
 
-    def __init__(self):
+    def __init__(self) -> None:
         logger.debug("SyntaxValidator initialized")
 
-    def validate(self, code: str, language: str) -> dict:
+    def validate(self, code: str, language: str) -> dict[str, Any]:
         """Validate code syntax"""
         if language.lower() == "python":
             return self._validate_python(code)
@@ -21,7 +22,7 @@ class SyntaxValidator:
             return self._validate_javascript(code)
         return {"valid": True, "errors": []}
 
-    def _validate_python(self, code: str) -> dict:
+    def _validate_python(self, code: str) -> dict[str, Any]:
         """Validate Python syntax"""
         try:
             compile(code, "<string>", "exec")
@@ -33,7 +34,7 @@ class SyntaxValidator:
                 "language": "python",
             }
 
-    def _validate_javascript(self, code: str) -> dict:
+    def _validate_javascript(self, code: str) -> dict[str, Any]:
         """Validate JavaScript syntax"""
         errors = []
         if code.count("{") != code.count("}"):

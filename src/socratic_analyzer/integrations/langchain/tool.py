@@ -3,16 +3,16 @@
 from typing import Any, Optional
 
 try:
-    from langchain.callbacks.manager import CallbackManagerToolRun
-    from langchain.tools import BaseTool
+    from langchain.tools import BaseTool  # type: ignore[attr-defined]
+    from langchain.callbacks.manager import CallbackManagerForToolRun  # type: ignore[attr-defined]
 except ImportError:
     # Fallback for newer LangChain versions
     try:
-        from langchain_core.callbacks.manager import CallbackManagerToolRun
         from langchain_core.tools import BaseTool
+        from langchain_core.callbacks.manager import CallbackManagerForToolRun
     except ImportError:
-        BaseTool = object  # type: ignore
-        CallbackManagerToolRun = None  # type: ignore
+        BaseTool = object  # type: ignore[assignment]
+        CallbackManagerForToolRun = None  # type: ignore[assignment,misc]
 
 from socratic_analyzer.client import AnalyzerClient
 from socratic_analyzer.models import AnalyzerConfig
@@ -241,7 +241,7 @@ class SocraticAnalyzerRecommendationsTool(BaseTool):
         return self._run(code, run_manager)
 
 
-def create_analyzer_tools() -> list:
+def create_analyzer_tools() -> list[BaseTool]:  # type: ignore[name-defined]
     """Create a list of all Socratic Analyzer tools for LangChain.
 
     Returns:

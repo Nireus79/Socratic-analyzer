@@ -30,7 +30,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
         Returns:
             List of CodeIssue objects for performance issues found
         """
-        issues = []
+        issues: list[CodeIssue] = []
 
         try:
             tree = ast.parse(code)
@@ -134,7 +134,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
         issues = []
 
         # Track function calls
-        call_counts = {}
+        call_counts: dict[str, int] = {}
 
         for node in ast.walk(tree):
             if isinstance(node, ast.Call):

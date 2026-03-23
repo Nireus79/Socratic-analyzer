@@ -31,7 +31,7 @@ class ImportAnalyzer(BaseAnalyzer):
         Returns:
             List of import issues
         """
-        issues = []
+        issues: list[CodeIssue] = []
 
         # Parse code
         tree = ASTAnalyzer.parse_code(code)

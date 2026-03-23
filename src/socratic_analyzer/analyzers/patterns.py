@@ -30,7 +30,7 @@ class PatternAnalyzer(BaseAnalyzer):
         Returns:
             List of CodeIssue objects for patterns found
         """
-        issues = []
+        issues: list[CodeIssue] = []
 
         try:
             tree = ast.parse(code)

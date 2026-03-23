@@ -85,7 +85,7 @@ class ASTAnalyzer:
 
         # Get parameters
         args = func_node.args
-        params = []
+        params: list[str] = []
         if args.args:
             params.extend(arg.arg for arg in args.args)
         if args.kwonlyargs:
@@ -234,7 +234,7 @@ class ASTAnalyzer:
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 # Get parameter names
-                params = set()
+                params: set[str] = set()
                 if node.args.args:
                     params.update(arg.arg for arg in node.args.args)
 

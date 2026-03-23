@@ -42,7 +42,7 @@ class CodeAnalyzer:
     security, performance, and design patterns.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the code analyzer."""
         self.llm_client = None
         self._initialize_llm()

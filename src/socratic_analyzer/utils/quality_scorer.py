@@ -1,6 +1,6 @@
 """Quality scoring system for code analysis results."""
 
-from typing import List
+from typing import Any, List
 
 from socratic_analyzer.models import Analysis
 
@@ -209,7 +209,7 @@ class QualityScorer:
         return suggestions
 
     @classmethod
-    def create_quality_report(cls, analysis: Analysis) -> dict:
+    def create_quality_report(cls, analysis: Analysis) -> dict[str, Any]:
         """Create comprehensive quality report.
 
         Args:

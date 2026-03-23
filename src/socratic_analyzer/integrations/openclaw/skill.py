@@ -119,7 +119,7 @@ class SocraticAnalyzerSkill:
         """
         analysis = self.client.analyze_code(code, file_path)
         quality_report = QualityScorer.create_quality_report(analysis)
-        return quality_report["overall_score"]
+        return float(quality_report.get("overall_score", 0.0))
 
     def get_quality_report(self, code: str, file_path: str = "unknown.py") -> Dict[str, Any]:
         """Get comprehensive quality report.
