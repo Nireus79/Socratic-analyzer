@@ -57,10 +57,10 @@ Repository = "https://github.com/Nireus79/Socratic-analyzer.git"
 Issues = "https://github.com/Nireus79/Socratic-analyzer/issues"
 
 [tool.setuptools]
-packages = ["socratic_analyzer"]
+package-dir = {"" = "src"}
 
-[tool.setuptools.package-dir]
-"" = "src"
+[tool.setuptools.packages]
+find = {where = ["src"]}
 
 [tool.black]
 line-length = 100
