@@ -18,6 +18,14 @@ from .exceptions import (
     ReportFormatError,
 )
 from .models import Analysis, AnalyzerConfig, CodeIssue, MetricResult, ProjectAnalysis
+from .testing import (
+    TestResult,
+    TestSuiteResult,
+    CoverageReport,
+    TestDiscoverer,
+    TestExecutor,
+    TestAnalyzer,
+)
 
 __all__ = [
     # Client
@@ -29,6 +37,13 @@ __all__ = [
     "CodeIssue",
     "MetricResult",
     "ProjectAnalysis",
+    # Testing Framework
+    "TestResult",
+    "TestSuiteResult",
+    "CoverageReport",
+    "TestDiscoverer",
+    "TestExecutor",
+    "TestAnalyzer",
     # Exceptions
     "AnalyzerError",
     "AnalysisError",

@@ -193,3 +193,48 @@ class AnalyzerConfig:
             f"line_length={self.max_line_length}, "
             f"llm={self.use_llm})"
         )
+
+
+@dataclass
+class TestExecutionAnalysis:
+    """Analysis of test execution results."""
+
+    project_path: str
+    total_tests: int = 0
+    passed_tests: int = 0
+    failed_tests: int = 0
+    error_tests: int = 0
+    skipped_tests: int = 0
+    test_files: int = 0
+    coverage_percentage: float = 0.0
+    gaps: List[str] = field(default_factory=list)
+    recommendations: List[str] = field(default_factory=list)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+    @property
+    def success_rate(self) -> float:
+        """Calculate test success rate as percentage."""
+        if self.total_tests == 0:
+            return 0.0
+        return ((self.total_tests - self.failed_tests - self.error_tests) / self.total_tests) * 100
+
+    @property
+    def coverage_status(self) -> str:
+        """Get coverage status."""
+        if self.coverage_percentage >= 90:
+            return "excellent"
+        elif self.coverage_percentage >= 70:
+            return "good"
+        elif self.coverage_percentage >= 50:
+            return "fair"
+        else:
+            return "poor"
+
+    def __repr__(self) -> str:
+        """Return string representation."""
+        return (
+            f"TestExecutionAnalysis({self.project_path}, "
+            f"tests={self.total_tests}, "
+            f"success={self.success_rate:.1f}%, "
+            f"coverage={self.coverage_percentage:.1f}%)"
+        )
