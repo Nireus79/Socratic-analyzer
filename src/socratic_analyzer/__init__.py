@@ -24,7 +24,9 @@ from .exceptions import (
     ReportError,
     ReportFormatError,
 )
+from .extraction.code_extractor import CodeExtractor
 from .models import Analysis, AnalyzerConfig, CodeIssue, MetricResult, ProjectAnalysis
+from .parsing.code_parser import CodeParser
 from .testing import (
     TestResult,
     TestSuiteResult,
@@ -45,6 +47,9 @@ __all__ = [
     # Client
     "AnalyzerClient",
     "AsyncAnalyzerClient",
+    # Code Analysis
+    "CodeParser",
+    "CodeExtractor",
     # Models
     "Analysis",
     "AnalyzerConfig",
