@@ -25,6 +25,13 @@ from .testing import (
     TestDiscoverer,
     TestExecutor,
     TestAnalyzer,
+    ABTestingFramework,
+    ExperimentResult,
+    ExperimentStatus,
+    ExperimentMetrics,
+    HypothesisResult,
+    Variant,
+    VariantAssignment,
 )
 
 __all__ = [
@@ -44,6 +51,14 @@ __all__ = [
     "TestDiscoverer",
     "TestExecutor",
     "TestAnalyzer",
+    # A/B Testing
+    "ABTestingFramework",
+    "ExperimentResult",
+    "ExperimentStatus",
+    "ExperimentMetrics",
+    "HypothesisResult",
+    "Variant",
+    "VariantAssignment",
     # Exceptions
     "AnalyzerError",
     "AnalysisError",
