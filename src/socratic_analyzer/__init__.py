@@ -6,6 +6,13 @@ __email__ = "info@socratic-analyzer.dev"
 
 from .async_client import AsyncAnalyzerClient
 from .client import AnalyzerClient
+from .debugging import (
+    WorkflowDebugger,
+    ExecutionProfiler,
+    WorkflowValidator,
+    DebugEvent,
+    WorkflowDebugTrace,
+)
 from .exceptions import (
     AnalysisError,
     AnalyzerError,
@@ -59,6 +66,12 @@ __all__ = [
     "HypothesisResult",
     "Variant",
     "VariantAssignment",
+    # Workflow Debugging
+    "WorkflowDebugger",
+    "ExecutionProfiler",
+    "WorkflowValidator",
+    "DebugEvent",
+    "WorkflowDebugTrace",
     # Exceptions
     "AnalyzerError",
     "AnalysisError",
