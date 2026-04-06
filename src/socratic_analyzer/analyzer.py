@@ -114,7 +114,7 @@ Format response as JSON with keys: issues, improvements, security_concerns, perf
             logger.info(f"Analyzed {len(code)} characters of {language} code")
 
         except Exception as e:
-            logger.error(f"Error analyzing code: {e}")
+            logger.error(f"Error analyzing code: {e}", exc_info=True)
 
         return result
 

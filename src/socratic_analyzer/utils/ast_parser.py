@@ -1,7 +1,10 @@
 """AST parsing utilities for code analysis."""
 
 import ast
+import logging
 from typing import Any, Dict, List, Optional, Tuple
+
+logger = logging.getLogger(__name__)
 
 
 class ASTAnalyzer:
@@ -19,7 +22,8 @@ class ASTAnalyzer:
         """
         try:
             return ast.parse(code)
-        except SyntaxError:
+        except SyntaxError as e:
+            logger.debug(f"Syntax error while parsing code: {e}")
             return None
 
     @staticmethod

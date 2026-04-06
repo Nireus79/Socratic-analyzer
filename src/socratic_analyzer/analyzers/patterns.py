@@ -1,10 +1,13 @@
 """Pattern analysis for code anti-patterns and design pattern detection."""
 
 import ast
+import logging
 from typing import List
 
 from socratic_analyzer.analyzers.base import BaseAnalyzer
 from socratic_analyzer.models import CodeIssue
+
+logger = logging.getLogger(__name__)
 
 
 class PatternAnalyzer(BaseAnalyzer):
@@ -34,7 +37,8 @@ class PatternAnalyzer(BaseAnalyzer):
 
         try:
             tree = ast.parse(code)
-        except SyntaxError:
+        except SyntaxError as e:
+            logger.debug(f"Syntax error in pattern analysis: {e}")
             return issues
 
         # Run pattern detections
