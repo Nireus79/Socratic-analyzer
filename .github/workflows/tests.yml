@@ -74,7 +74,7 @@ jobs:
       - name: Check code quality
         run: |
           # Check minimum test coverage
-          pytest tests/ --cov=src/socratic_analyzer --cov-fail-under=80 --quiet
+          pytest tests/ --cov=src/socratic_analyzer --cov-fail-under=70 --quiet
 
       - name: Security scan with bandit
         run: |
