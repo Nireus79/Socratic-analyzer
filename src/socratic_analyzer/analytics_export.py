@@ -1,13 +1,11 @@
 """Analytics export for socratic-analyzer."""
 import asyncio
+import csv
 import json
 import logging
-import csv
-from dataclasses import asdict
 from datetime import datetime
-from typing import Any, Dict, List, Optional
 from pathlib import Path
-import asyncio
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -74,10 +72,12 @@ class ReportGenerator:
     
     async def generate_user_analytics_report(self, user_id: str, metrics: Dict[str, Any]) -> Dict[str, Any]:
         """Generate user analytics report."""
+        timestamp = datetime.now().isoformat()
+        safe_timestamp = timestamp.replace(":", "-")
         report = {
-            "report_id": f"user_{user_id}_{datetime.now().isoformat()}",
+            "report_id": f"user_{user_id}_{safe_timestamp}",
             "user_id": user_id,
-            "generated_at": datetime.now().isoformat(),
+            "generated_at": timestamp,
             "metrics": metrics,
             "summary": {
                 "total_sessions": metrics.get("total_sessions", 0),
@@ -93,11 +93,13 @@ class ReportGenerator:
         """Generate cohort analytics report."""
         total_users = len(users_metrics)
         avg_completion = sum(m.get("completion_rate", 0) for m in users_metrics) / total_users if total_users > 0 else 0
-        
+
+        timestamp = datetime.now().isoformat()
+        safe_timestamp = timestamp.replace(":", "-")
         report = {
-            "report_id": f"cohort_{cohort_name}_{datetime.now().isoformat()}",
+            "report_id": f"cohort_{cohort_name}_{safe_timestamp}",
             "cohort_name": cohort_name,
-            "generated_at": datetime.now().isoformat(),
+            "generated_at": timestamp,
             "total_users": total_users,
             "summary": {
                 "average_completion_rate": avg_completion,
@@ -151,11 +153,13 @@ class ScheduledExporter:
                 if last is None or (datetime.now() - last).total_seconds() > (config["interval_hours"] * 3600):
                     try:
                         data = await config["data_source"]()
-                        await self.exporter.export_to_json(data, f"{export_id}_{datetime.now().isoformat()}")
+                        timestamp = datetime.now().isoformat()
+                        safe_timestamp = timestamp.replace(":", "-")
+                        await self.exporter.export_to_json(data, f"{export_id}_{safe_timestamp}")
                         config["last_export"] = datetime.now()
                     except Exception as e:
                         logger.error(f"Failed to execute scheduled export {export_id}: {e}")
-            
+
             await asyncio.sleep(60)
     
     async def stop_scheduler(self) -> None:
