@@ -7,7 +7,7 @@ import re
 import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List, Optional, Dict, Any, Tuple
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -135,7 +135,7 @@ class TestDiscoverer:
         tests = []
 
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -148,12 +148,8 @@ class TestDiscoverer:
                 elif isinstance(node, ast.ClassDef):
                     if node.name.startswith("Test"):
                         for item in node.body:
-                            if isinstance(item, ast.FunctionDef) and item.name.startswith(
-                                "test_"
-                            ):
-                                tests.append(
-                                    f"{Path(file_path).stem}::{node.name}::{item.name}"
-                                )
+                            if isinstance(item, ast.FunctionDef) and item.name.startswith("test_"):
+                                tests.append(f"{Path(file_path).stem}::{node.name}::{item.name}")
 
         except (SyntaxError, OSError) as e:
             logging.warning(f"Failed to parse {file_path}: {e}")
@@ -176,9 +172,7 @@ class TestExecutor:
         self.timeout_seconds = timeout_seconds
         self.logger = logging.getLogger(__name__)
 
-    def execute_tests(
-        self, test_files: Optional[List[str]] = None
-    ) -> List[TestSuiteResult]:
+    def execute_tests(self, test_files: Optional[List[str]] = None) -> List[TestSuiteResult]:
         """
         Execute tests and collect results.
 
@@ -352,9 +346,7 @@ class TestExecutor:
         match = re.search(r"(\d+) skipped", output)
         suite_result.skipped = int(match.group(1)) if match else 0
 
-        suite_result.total_tests = (
-            suite_result.passed + suite_result.failed + suite_result.errors
-        )
+        suite_result.total_tests = suite_result.passed + suite_result.failed + suite_result.errors
 
         if result.returncode != 0:
             suite_result.error_message = "Some tests failed"
@@ -395,9 +387,7 @@ class TestExecutor:
         if errors_match:
             suite_result.errors = int(errors_match.group(1))
 
-        suite_result.passed = (
-            suite_result.total_tests - suite_result.failed - suite_result.errors
-        )
+        suite_result.passed = suite_result.total_tests - suite_result.failed - suite_result.errors
 
         if result.returncode != 0:
             suite_result.error_message = "Some tests failed"
@@ -413,7 +403,7 @@ class TestExecutor:
         """
         try:
             # Run coverage
-            result = subprocess.run(
+            subprocess.run(
                 ["coverage", "run", "-m", "pytest"],
                 capture_output=True,
                 timeout=self.timeout_seconds,
@@ -430,7 +420,6 @@ class TestExecutor:
             )
 
             if coverage_result.returncode == 0:
-                coverage_file = self.project_path / ".coverage"
                 json_file = self.project_path / "coverage.json"
 
                 if json_file.exists():
@@ -444,11 +433,7 @@ class TestExecutor:
                         )
                         report.total_lines = coverage_data["totals"].get("num_statements", 0)
                         report.covered_lines = int(
-                            (
-                                report.coverage_percentage
-                                / 100
-                                * report.total_lines
-                            )
+                            report.coverage_percentage / 100 * report.total_lines
                         )
 
                     return report
@@ -506,7 +491,7 @@ class TestAnalyzer:
         untested = []
 
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)

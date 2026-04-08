@@ -5,9 +5,9 @@ Supports Python, JavaScript, Java, C++, and C with language-specific extraction.
 """
 
 import ast
-import re
 import logging
-from typing import Dict, List, Tuple, Optional, Any
+import re
+from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ class CodeParser:
             Dictionary containing parsed code structure
         """
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             # Auto-detect language from file extension
@@ -128,8 +128,14 @@ class CodeParser:
                 "imports": list(set(imports)),
                 "metrics": {
                     "total_lines": len(lines),
-                    "code_lines": len([l for l in lines if l.strip() and not l.strip().startswith("#")]),
-                    "comment_lines": len([l for l in lines if l.strip().startswith("#")]),
+                    "code_lines": len(
+                        [
+                            line
+                            for line in lines
+                            if line.strip() and not line.strip().startswith("#")
+                        ]
+                    ),
+                    "comment_lines": len([line for line in lines if line.strip().startswith("#")]),
                     "function_count": len(functions),
                     "class_count": len(classes),
                     "import_count": len(set(imports)),
@@ -149,7 +155,9 @@ class CodeParser:
             "line": node.lineno,
             "args": args,
             "defaults": defaults,
-            "decorators": [ast.unparse(d) if hasattr(ast, "unparse") else str(d) for d in node.decorator_list],
+            "decorators": [
+                ast.unparse(d) if hasattr(ast, "unparse") else str(d) for d in node.decorator_list
+            ],
         }
 
     def _extract_python_class(self, node: ast.ClassDef) -> Dict[str, Any]:
@@ -178,26 +186,32 @@ class CodeParser:
         # Function patterns
         function_pattern = r"(?:async\s+)?function\s+(\w+)\s*\((.*?)\)"
         for match in re.finditer(function_pattern, content):
-            functions.append({
-                "name": match.group(1),
-                "args": [arg.strip() for arg in match.group(2).split(",") if arg.strip()],
-            })
+            functions.append(
+                {
+                    "name": match.group(1),
+                    "args": [arg.strip() for arg in match.group(2).split(",") if arg.strip()],
+                }
+            )
 
         # Arrow function patterns
         arrow_pattern = r"(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?\((.*?)\)\s*=>"
         for match in re.finditer(arrow_pattern, content):
-            functions.append({
-                "name": match.group(1),
-                "args": [arg.strip() for arg in match.group(2).split(",") if arg.strip()],
-            })
+            functions.append(
+                {
+                    "name": match.group(1),
+                    "args": [arg.strip() for arg in match.group(2).split(",") if arg.strip()],
+                }
+            )
 
         # Class patterns
         class_pattern = r"class\s+(\w+)(?:\s+extends\s+(\w+))?"
         for match in re.finditer(class_pattern, content):
-            classes.append({
-                "name": match.group(1),
-                "extends": match.group(2),
-            })
+            classes.append(
+                {
+                    "name": match.group(1),
+                    "extends": match.group(2),
+                }
+            )
 
         # Import patterns
         import_pattern = r"(?:import|require)\s+(?:\{.*?\}|.*?)\s+from\s+['\"]([^'\"]+)['\"]"
@@ -212,8 +226,10 @@ class CodeParser:
             "imports": list(set(imports)),
             "metrics": {
                 "total_lines": len(lines),
-                "code_lines": len([l for l in lines if l.strip() and not l.strip().startswith("//")]),
-                "comment_lines": len([l for l in lines if l.strip().startswith("//")]),
+                "code_lines": len(
+                    [line for line in lines if line.strip() and not line.strip().startswith("//")]
+                ),
+                "comment_lines": len([line for line in lines if line.strip().startswith("//")]),
                 "function_count": len(functions),
                 "class_count": len(classes),
                 "import_count": len(set(imports)),
@@ -234,19 +250,25 @@ class CodeParser:
         # Class patterns
         class_pattern = r"(?:public\s+)?class\s+(\w+)(?:\s+extends\s+(\w+))?"
         for match in re.finditer(class_pattern, content):
-            classes.append({
-                "name": match.group(1),
-                "extends": match.group(2),
-            })
+            classes.append(
+                {
+                    "name": match.group(1),
+                    "extends": match.group(2),
+                }
+            )
 
         # Method patterns
-        method_pattern = r"(?:public|private|protected)\s+(?:static\s+)?(?:void|\w+)\s+(\w+)\s*\((.*?)\)"
+        method_pattern = (
+            r"(?:public|private|protected)\s+(?:static\s+)?(?:void|\w+)\s+(\w+)\s*\((.*?)\)"
+        )
         for match in re.finditer(method_pattern, content):
             args = [arg.split()[-1] for arg in match.group(2).split(",") if arg.strip()]
-            functions.append({
-                "name": match.group(1),
-                "args": args,
-            })
+            functions.append(
+                {
+                    "name": match.group(1),
+                    "args": args,
+                }
+            )
 
         lines = content.split("\n")
         return {
@@ -256,8 +278,10 @@ class CodeParser:
             "imports": list(set(imports)),
             "metrics": {
                 "total_lines": len(lines),
-                "code_lines": len([l for l in lines if l.strip() and not l.strip().startswith("//")]),
-                "comment_lines": len([l for l in lines if l.strip().startswith("//")]),
+                "code_lines": len(
+                    [line for line in lines if line.strip() and not line.strip().startswith("//")]
+                ),
+                "comment_lines": len([line for line in lines if line.strip().startswith("//")]),
                 "function_count": len(functions),
                 "class_count": len(classes),
                 "import_count": len(set(imports)),
@@ -287,19 +311,23 @@ class CodeParser:
         if language == "cpp":
             class_pattern = r"(?:class|struct)\s+(\w+)(?:\s*:\s*(?:public|private)\s+(\w+))?"
             for match in re.finditer(class_pattern, content):
-                classes.append({
-                    "name": match.group(1),
-                    "parent": match.group(2),
-                })
+                classes.append(
+                    {
+                        "name": match.group(1),
+                        "parent": match.group(2),
+                    }
+                )
 
         # Function patterns
         function_pattern = r"(?:\w+(?:\s+\*)?)\s+(\w+)\s*\((.*?)\)\s*(?:const)?\s*[{;]"
         for match in re.finditer(function_pattern, content):
             args = [arg.split()[-1] for arg in match.group(2).split(",") if arg.strip()]
-            functions.append({
-                "name": match.group(1),
-                "args": args,
-            })
+            functions.append(
+                {
+                    "name": match.group(1),
+                    "args": args,
+                }
+            )
 
         lines = content.split("\n")
         return {
@@ -309,8 +337,10 @@ class CodeParser:
             "includes": list(set(includes)),
             "metrics": {
                 "total_lines": len(lines),
-                "code_lines": len([l for l in lines if l.strip() and not l.strip().startswith("//")]),
-                "comment_lines": len([l for l in lines if l.strip().startswith("//")]),
+                "code_lines": len(
+                    [line for line in lines if line.strip() and not line.strip().startswith("//")]
+                ),
+                "comment_lines": len([line for line in lines if line.strip().startswith("//")]),
                 "function_count": len(functions),
                 "class_count": len(classes),
                 "include_count": len(set(includes)),

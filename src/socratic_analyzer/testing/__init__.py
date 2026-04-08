@@ -10,12 +10,12 @@ from .ab_testing import (
     VariantAssignment,
 )
 from .executor import (
-    TestResult,
-    TestSuiteResult,
     CoverageReport,
+    TestAnalyzer,
     TestDiscoverer,
     TestExecutor,
-    TestAnalyzer,
+    TestResult,
+    TestSuiteResult,
 )
 
 __all__ = [

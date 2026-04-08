@@ -3,7 +3,7 @@
 import logging
 import time
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -104,10 +104,7 @@ class WorkflowDebugger:
 
     def should_break(self, workflow_id: str, step_id: str) -> bool:
         """Check if execution should pause at breakpoint."""
-        return (
-            workflow_id in self.breakpoints
-            and step_id in self.breakpoints[workflow_id]
-        )
+        return workflow_id in self.breakpoints and step_id in self.breakpoints[workflow_id]
 
     def pause_workflow(self, workflow_id: str) -> None:
         """Pause workflow execution."""
@@ -142,13 +139,15 @@ class WorkflowDebugger:
         timeline = []
 
         for event in trace.events:
-            timeline.append({
-                "step_id": event.step_id,
-                "event_type": event.event_type,
-                "timestamp": event.timestamp,
-                "duration_ms": event.duration_ms,
-                "error": event.error,
-            })
+            timeline.append(
+                {
+                    "step_id": event.step_id,
+                    "event_type": event.event_type,
+                    "timestamp": event.timestamp,
+                    "duration_ms": event.duration_ms,
+                    "error": event.error,
+                }
+            )
 
         return timeline
 
