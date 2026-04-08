@@ -3,9 +3,9 @@
 import logging
 import random
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime
 from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -105,7 +105,7 @@ class ExperimentMetrics:
 
         if self.count > 1:
             variance = sum((x - self.mean) ** 2 for x in self.values) / self.count
-            self.std_dev = variance ** 0.5
+            self.std_dev = variance**0.5
 
         self.min_value = min(self.values)
         self.max_value = max(self.values)
@@ -352,8 +352,8 @@ class ABTestingFramework:
             # Calculate effect size (Cohen's d)
             pooled_std = (
                 (
-                    (control_metrics.count - 1) * control_metrics.std_dev ** 2
-                    + (treatment_metrics.count - 1) * treatment_metrics.std_dev ** 2
+                    (control_metrics.count - 1) * control_metrics.std_dev**2
+                    + (treatment_metrics.count - 1) * treatment_metrics.std_dev**2
                 )
                 / (control_metrics.count + treatment_metrics.count - 2)
             ) ** 0.5

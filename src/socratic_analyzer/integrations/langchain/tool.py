@@ -3,6 +3,10 @@
 import logging
 from typing import Any, Optional
 
+from socratic_analyzer.client import AnalyzerClient
+from socratic_analyzer.models import AnalyzerConfig
+from socratic_analyzer.utils.quality_scorer import QualityScorer
+
 logger = logging.getLogger(__name__)
 
 try:
@@ -18,10 +22,6 @@ except ImportError:
     except ImportError:
         BaseTool = object  # type: ignore[assignment,misc]
         CallbackManagerForToolRun = None  # type: ignore[assignment,misc]
-
-from socratic_analyzer.client import AnalyzerClient
-from socratic_analyzer.models import AnalyzerConfig
-from socratic_analyzer.utils.quality_scorer import QualityScorer
 
 
 class SocraticAnalyzerTool(BaseTool):
@@ -118,11 +118,13 @@ class SocraticAnalyzerTool(BaseTool):
             return "\n".join(result_lines)
 
         except (ValueError, TypeError, AttributeError) as e:
-            logger.error(f"Invalid code format or configuration error in code analysis: {e}", exc_info=True)
+            logger.error(
+                f"Invalid code format or configuration error in code analysis: {e}", exc_info=True
+            )
             return f"Error analyzing code: {type(e).__name__}: {str(e)}"
         except Exception as e:
             logger.exception(f"Unexpected error during code analysis: {e}")
-            return f"Error analyzing code: Internal service error - please check logs"
+            return "Error analyzing code: Internal service error - please check logs"
 
     async def _arun(
         self,
@@ -176,7 +178,7 @@ class SocraticAnalyzerQualityTool(BaseTool):
             return f"Error: {type(e).__name__}: {str(e)}"
         except Exception as e:
             logger.exception(f"Unexpected error in quality scoring: {e}")
-            return f"Error: Internal service error - please check logs"
+            return "Error: Internal service error - please check logs"
 
     async def _arun(self, code: str, run_manager: Optional[Any] = None) -> str:
         """Run the tool asynchronously."""
@@ -228,7 +230,7 @@ class SocraticAnalyzerIssuesTool(BaseTool):
             return f"Error: {type(e).__name__}: {str(e)}"
         except Exception as e:
             logger.exception(f"Unexpected error during issue detection: {e}")
-            return f"Error: Internal service error - please check logs"
+            return "Error: Internal service error - please check logs"
 
     async def _arun(self, code: str, run_manager: Optional[Any] = None) -> str:
         """Run the tool asynchronously."""
@@ -273,7 +275,7 @@ class SocraticAnalyzerRecommendationsTool(BaseTool):
             return f"Error: {type(e).__name__}: {str(e)}"
         except Exception as e:
             logger.exception(f"Unexpected error generating recommendations: {e}")
-            return f"Error: Internal service error - please check logs"
+            return "Error: Internal service error - please check logs"
 
     async def _arun(self, code: str, run_manager: Optional[Any] = None) -> str:
         """Run the tool asynchronously."""
