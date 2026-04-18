@@ -1,6 +1,5 @@
 """Tests for validation modules."""
 
-import pytest
 
 from socratic_analyzer.validation.code_structure_analyzer import CodeStructureAnalyzer
 from socratic_analyzer.validation.dependency_validator import DependencyValidator

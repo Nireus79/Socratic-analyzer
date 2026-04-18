@@ -1,6 +1,5 @@
 """Tests for analyzer and metrics modules."""
 
-import pytest
 
 from socratic_analyzer.analyzer import AnalysisResult, CodeAnalyzer, CodeMetadata
 from socratic_analyzer.metrics import MetricsCalculator, QualityMetrics
