@@ -14,8 +14,8 @@ from .debugging import (
 from .document_analyzer import (
     AdaptiveDocumentLoader,
     Document,
-    DocumentAnalyzer,
     DocumentAnalysisResult,
+    DocumentAnalyzer,
 )
 from .exceptions import (
     AnalysisError,
