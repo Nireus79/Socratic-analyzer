@@ -1,8 +1,6 @@
-"""Socratic Analyzer - Production-grade code analysis package."""
+"""Socratic Analyzer - Production-grade code and document analysis."""
 
-__version__ = "0.1.0"
-__author__ = "Socratic Analyzer"
-__email__ = "info@socratic-analyzer.dev"
+__version__ = "0.2.0"
 
 from .async_client import AsyncAnalyzerClient
 from .client import AnalyzerClient
@@ -12,6 +10,12 @@ from .debugging import (
     WorkflowDebugger,
     WorkflowDebugTrace,
     WorkflowValidator,
+)
+from .document_analyzer import (
+    AdaptiveDocumentLoader,
+    Document,
+    DocumentAnalyzer,
+    DocumentAnalysisResult,
 )
 from .exceptions import (
     AnalysisError,
@@ -50,6 +54,11 @@ __all__ = [
     # Code Analysis
     "CodeParser",
     "CodeExtractor",
+    # Document Analysis
+    "DocumentAnalyzer",
+    "AdaptiveDocumentLoader",
+    "Document",
+    "DocumentAnalysisResult",
     # Models
     "Analysis",
     "AnalyzerConfig",
