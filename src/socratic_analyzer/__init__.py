@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Socratic Analyzer - Analysis and Monitoring
 

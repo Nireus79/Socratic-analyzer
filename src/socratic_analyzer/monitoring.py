@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Monitoring and token usage models for Socrates AI
 """
