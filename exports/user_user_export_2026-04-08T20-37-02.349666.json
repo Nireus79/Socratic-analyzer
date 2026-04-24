@@ -1,0 +1,15 @@
+{
+  "report_id": "user_user_export_2026-04-08T20-37-02.349666",
+  "user_id": "user_export",
+  "generated_at": "2026-04-08T20:37:02.349666",
+  "metrics": {
+    "total_sessions": 10,
+    "total_questions_answered": 50,
+    "completion_rate": 0.85
+  },
+  "summary": {
+    "total_sessions": 10,
+    "total_questions": 50,
+    "completion_rate": 0.85
+  }
+}

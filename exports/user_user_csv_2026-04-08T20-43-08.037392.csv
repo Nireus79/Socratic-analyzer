@@ -1,0 +1,2 @@
+report_id,user_id,generated_at,metrics,summary
+user_user_csv_2026-04-08T20-43-08.037392,user_csv,2026-04-08T20:43:08.037392,"{'total_sessions': 10, 'total_questions_answered': 50, 'completion_rate': 0.85}","{'total_sessions': 10, 'total_questions': 50, 'completion_rate': 0.85}"
