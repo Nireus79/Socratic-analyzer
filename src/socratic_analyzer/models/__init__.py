@@ -2,7 +2,7 @@
 
 # Import models from their owning libraries
 from socratic_conflict import ConflictInfo
-from socratic_maturity import CategoryScore, PhaseMaturity, MaturityEvent
+from socratic_maturity import CategoryScore, MaturityEvent, PhaseMaturity
 
 # Local models
 from .project import ProjectContext

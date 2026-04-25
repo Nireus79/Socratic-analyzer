@@ -8,9 +8,9 @@ complexity, and rework probability for workflow paths.
 import logging
 from typing import Any, Dict, List
 
-from .project_categories import get_phase_categories
 from ..models.project import ProjectContext
 from ..models.workflow import WorkflowDefinition, WorkflowPath
+from .project_categories import get_phase_categories
 
 logger = logging.getLogger(__name__)
 
