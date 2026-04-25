@@ -26,13 +26,13 @@ classifiers = [
 ]
 
 dependencies = [
-    "socrates-nexus>=0.3.1",
+    "socratic-nexus>=0.3.6",
 ]
 
 [project.optional-dependencies]
 openclaw = []
 langchain = ["langchain>=0.1.0"]
-llm = ["socrates-nexus>=0.1.0"]
+llm = ["socratic-nexus>=0.3.6"]
 
 all = [
     "langchain>=0.1.0",
