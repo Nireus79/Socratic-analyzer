@@ -32,7 +32,7 @@ from .models import (
 from .monitoring import TokenUsage
 from .utils import DependencyValidator, SyntaxValidator, TestExecutor
 
-__version__ = "0.2.0"
+__version__ = "0.1.5"
 __all__ = [
     # Core analysis
     "InsightCategorizer",
