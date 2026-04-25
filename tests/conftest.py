@@ -43,8 +43,7 @@ class DataProcessor:
 def sample_file(tmp_path) -> Path:
     """Create a temporary Python file with sample code."""
     file_path = tmp_path / "sample.py"
-    file_path.write_text(
-        '''
+    file_path.write_text('''
 def badly_named_func(x, y, z):
     """Missing docstring details."""
     a = 1
@@ -55,8 +54,7 @@ def badly_named_func(x, y, z):
     f = e + 1
     g = f * x
     return g
-'''
-    )
+''')
     return file_path
 
 
@@ -67,19 +65,16 @@ def temp_project_dir(tmp_path) -> Path:
     project_dir.mkdir()
 
     # Create multiple Python files
-    (project_dir / "module1.py").write_text(
-        '''
+    (project_dir / "module1.py").write_text('''
 def function_one(x):
     """Function one."""
     return x * 2
 
 def function_two(y):
     return y + 1
-'''
-    )
+''')
 
-    (project_dir / "module2.py").write_text(
-        """
+    (project_dir / "module2.py").write_text("""
 class MyClass:
     def __init__(self):
         self.value = 0
@@ -89,8 +84,7 @@ class MyClass:
 
     def get_value(self):
         return self.value
-"""
-    )
+""")
 
     return project_dir
 
