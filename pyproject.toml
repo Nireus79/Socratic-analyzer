@@ -27,6 +27,8 @@ classifiers = [
 
 dependencies = [
     "socratic-nexus>=0.3.6",
+    "socratic-conflict>=0.1.4",
+    "socratic-maturity>=0.1.1",
 ]
 
 [project.optional-dependencies]
