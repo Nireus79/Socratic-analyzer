@@ -6,7 +6,53 @@ Socratic Analyzer - Analysis and Monitoring
 Extracted from Socrates v1.3.3
 """
 
-from .monitoring import TokenUsage
+# Core analysis modules
+from .core import (
+    InsightCategorizer,
+    WorkflowCostCalculator,
+    WorkflowPathFinder,
+    WorkflowRiskCalculator,
+    get_phase_categories,
+)
 
-__version__ = "1.3.3"
-__all__ = ["TokenUsage"]
+# Data models
+from .models import (
+    CategoryScore,
+    ConflictInfo,
+    PhaseMaturity,
+    ProjectContext,
+    TeamMemberRole,
+    WorkflowDefinition,
+    WorkflowEdge,
+    WorkflowNode,
+    WorkflowPath,
+)
+
+# Utilities
+from .monitoring import TokenUsage
+from .utils import DependencyValidator, SyntaxValidator, TestExecutor
+
+__version__ = "0.2.0"
+__all__ = [
+    # Core analysis
+    "InsightCategorizer",
+    "WorkflowCostCalculator",
+    "WorkflowPathFinder",
+    "WorkflowRiskCalculator",
+    "get_phase_categories",
+    # Data models
+    "CategoryScore",
+    "ConflictInfo",
+    "PhaseMaturity",
+    "ProjectContext",
+    "TeamMemberRole",
+    "WorkflowDefinition",
+    "WorkflowEdge",
+    "WorkflowNode",
+    "WorkflowPath",
+    # Utilities
+    "TokenUsage",
+    "DependencyValidator",
+    "SyntaxValidator",
+    "TestExecutor",
+]

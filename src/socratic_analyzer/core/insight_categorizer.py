@@ -10,7 +10,7 @@ import logging
 from datetime import datetime
 from typing import Dict, List
 
-from .core.project_categories import (
+from .project_categories import (
     get_phase_categories,
     get_project_type_description,
 )

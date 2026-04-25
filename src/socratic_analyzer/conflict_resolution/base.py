@@ -5,7 +5,7 @@ Base class for conflict detection in Socrates AI
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 
-from socratic_system.models import ConflictInfo, ProjectContext
+from .models import ConflictInfo, ProjectContext
 
 
 class ConflictChecker(ABC):

@@ -5,7 +5,7 @@ Concrete conflict checker implementations for Socrates AI
 import logging
 from typing import Any, Dict, List, Optional
 
-from socratic_system.models import ConflictInfo, ProjectContext
+from .models import ConflictInfo, ProjectContext
 
 from .base import ConflictChecker
 from .rules import find_conflict_category

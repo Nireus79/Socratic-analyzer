@@ -6,9 +6,9 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from socratic_system.core.insight_categorizer import InsightCategorizer
-from socratic_system.core.project_categories import get_phase_categories
-from socratic_system.models import CategoryScore, PhaseMaturity
+from .core.insight_categorizer import InsightCategorizer
+from .core.project_categories import get_phase_categories
+from .models import CategoryScore, PhaseMaturity
 
 logger = logging.getLogger(__name__)
 
