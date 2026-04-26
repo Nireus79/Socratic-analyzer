@@ -160,6 +160,8 @@ class ProjectContext:
                 skills=[],
                 joined_at=self.created_at,
             )
+            if self.team_members is None:
+                self.team_members = []
             self.team_members.append(owner_member)
 
     def _migrate_collaborators_to_team_members(self) -> None:
@@ -171,6 +173,8 @@ class ProjectContext:
                 skills=[],
                 joined_at=datetime.datetime.now(),
             )
+            if self.team_members is None:
+                self.team_members = []
             self.team_members.append(member)
 
     def _ensure_owner_in_team_members(self) -> None:

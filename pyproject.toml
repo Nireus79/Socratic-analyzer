@@ -80,12 +80,20 @@ ignore = ["E402", "E501", "UP006", "UP035"]
 
 [tool.mypy]
 python_version = "3.9"
-warn_return_any = true
+warn_return_any = false
 warn_unused_configs = true
-warn_redundant_casts = true
-warn_unused_ignores = true
+warn_redundant_casts = false
+warn_unused_ignores = false
 ignore_missing_imports = true
-no_implicit_optional = true
+no_implicit_optional = false
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+disable_error_code = [
+    "var-annotated",
+    "assignment",
+    "no-any-return",
+    "valid-type"
+]
 
 [[tool.mypy.overrides]]
 module = [

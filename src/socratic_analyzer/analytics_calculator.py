@@ -322,7 +322,9 @@ class AnalyticsCalculator:
                     plateau_start = i
                 consecutive_low_delta += 1
             else:
-                if consecutive_low_delta >= 2:  # At least 2 stagnant sessions
+                if (
+                    consecutive_low_delta >= 2 and plateau_start is not None
+                ):  # At least 2 stagnant sessions
                     plateau_info = {
                         "start_session": plateau_start + 1,
                         "duration": consecutive_low_delta,
@@ -408,7 +410,8 @@ class AnalyticsCalculator:
                     }
                 )
             elif isinstance(category_scores.get(category), dict):
-                if category_scores[category].get("spec_count", 0) == 0:
+                score_dict = category_scores[category]
+                if isinstance(score_dict, dict) and score_dict.get("spec_count", 0) == 0:
                     missing_count += 1
                     logger.debug(f"Adding zero-spec category recommendation: {category}")
                     recommendations.append(
@@ -575,7 +578,7 @@ class AnalyticsCalculator:
                     plateau_start = i
                 consecutive_low += 1
             else:
-                if consecutive_low >= 2:
+                if consecutive_low >= 2 and plateau_start is not None:
                     plateaus.append((plateau_start + 1, consecutive_low))
                 consecutive_low = 0
 
