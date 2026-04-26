@@ -18,7 +18,6 @@ from .core import (
 # Data models
 from .models import (
     CategoryScore,
-    ConflictInfo,
     PhaseMaturity,
     ProjectContext,
     TeamMemberRole,
@@ -42,7 +41,6 @@ __all__ = [
     "get_phase_categories",
     # Data models
     "CategoryScore",
-    "ConflictInfo",
     "PhaseMaturity",
     "ProjectContext",
     "TeamMemberRole",

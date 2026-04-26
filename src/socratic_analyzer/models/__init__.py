@@ -1,7 +1,6 @@
 """Data models extracted from Socrates monolith."""
 
 # Import models from their owning libraries
-from socratic_conflict import ConflictInfo
 from socratic_maturity import CategoryScore, PhaseMaturity
 
 # Local models
@@ -10,7 +9,6 @@ from .role import TeamMemberRole
 from .workflow import WorkflowDefinition, WorkflowEdge, WorkflowNode, WorkflowPath
 
 __all__ = [
-    "ConflictInfo",
     "CategoryScore",
     "PhaseMaturity",
     "ProjectContext",
