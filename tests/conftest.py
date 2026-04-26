@@ -1,10 +1,21 @@
 """Pytest configuration and fixtures."""
 
+from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
 
-from socratic_analyzer import AnalyzerConfig
+
+@dataclass
+class AnalyzerConfig:
+    """Configuration for code analysis."""
+
+    analyze_types: bool = True
+    analyze_docstrings: bool = True
+    analyze_security: bool = True
+    analyze_performance: bool = True
+    max_complexity: int = 10
+    max_line_length: int = 120
 
 
 @pytest.fixture

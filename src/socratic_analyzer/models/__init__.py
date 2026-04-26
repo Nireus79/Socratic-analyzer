@@ -2,7 +2,7 @@
 
 # Import models from their owning libraries
 from socratic_conflict import ConflictInfo
-from socratic_maturity import CategoryScore, MaturityEvent, PhaseMaturity
+from socratic_maturity import CategoryScore, PhaseMaturity
 
 # Local models
 from .project import ProjectContext
@@ -13,7 +13,6 @@ __all__ = [
     "ConflictInfo",
     "CategoryScore",
     "PhaseMaturity",
-    "MaturityEvent",
     "ProjectContext",
     "TeamMemberRole",
     "WorkflowDefinition",
