@@ -1,9 +1,51 @@
 """Pytest configuration and fixtures."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any, Dict
+from unittest.mock import MagicMock
 
 import pytest
+import sys
+
+# Mock external Socratic libraries that aren't available in CI/CD
+# These are local dependencies from the Socrates monolith
+
+
+class MockCategoryScore:
+    """Mock CategoryScore from socratic_maturity."""
+
+    def __init__(
+        self,
+        category: str,
+        score: int,
+        max_score: int = 100,
+        description: str = "",
+    ):
+        self.category = category
+        self.score = score
+        self.max_score = max_score
+        self.description = description
+
+
+class MockPhaseMaturity:
+    """Mock PhaseMaturity from socratic_maturity."""
+
+    def __init__(
+        self, phase: str, timestamp: Any = None, category_scores: Dict[str, Any] | None = None
+    ):
+        self.phase = phase
+        self.timestamp = timestamp
+        self.category_scores = category_scores or {}
+
+
+# Create mock modules
+sys.modules["socratic_maturity"] = MagicMock()
+sys.modules["socratic_maturity"].CategoryScore = MockCategoryScore
+sys.modules["socratic_maturity"].PhaseMaturity = MockPhaseMaturity
+
+sys.modules["socratic_nexus"] = MagicMock()
+sys.modules["socratic_conflict"] = MagicMock()
 
 
 @dataclass
