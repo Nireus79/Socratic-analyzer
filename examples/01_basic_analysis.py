@@ -1,139 +1,105 @@
-"""Basic code analysis example."""
+"""
+Basic workflow analysis example.
 
-from socratic_analyzer import AnalyzerClient, AnalyzerConfig
+Demonstrates how to create a workflow, analyze its cost, and find optimal paths.
+"""
 
-# Sample Python code to analyze
-sample_code = '''
-"""A calculator module."""
+from datetime import datetime
 
-def add(x, y):
-    """Add two numbers."""
-    return x + y
-
-
-def complex_calculation(a, b, c):
-    """Calculate something complex."""
-    if a > 0:
-        if b > 0:
-            if c > 0:
-                if a > 100:
-                    if b > 100:
-                        if c > 100:
-                            return a + b + c
-    return 0
-
-
-class Calculator:
-    """A simple calculator class."""
-
-    def multiply(self, x, y):
-        result = x * y
-        return result
-
-    def divide(self, x, y):
-        if y == 0:
-            return None
-        return x / y
-'''
+from socratic_analyzer.models import (
+    ProjectContext,
+    WorkflowDefinition,
+    WorkflowEdge,
+    WorkflowNode,
+)
+from socratic_analyzer.core import (
+    WorkflowCostCalculator,
+    WorkflowPathFinder,
+    WorkflowRiskCalculator,
+)
 
 
 def main() -> None:
-    """Run basic analysis example."""
+    """Run basic workflow analysis example."""
     print("=" * 80)
-    print("SOCRATIC ANALYZER - BASIC EXAMPLE")
+    print("SOCRATIC ANALYZER - WORKFLOW ANALYSIS EXAMPLE")
     print("=" * 80)
     print()
 
-    # Create analyzer with default config
-    analyzer = AnalyzerClient()
+    # Create a sample workflow definition
+    workflow = WorkflowDefinition(
+        workflow_id="wf-001",
+        name="Development Workflow",
+        description="Standard development process workflow",
+        nodes=[
+            WorkflowNode(id="start", name="Start", node_type="start"),
+            WorkflowNode(id="analysis", name="Analysis", node_type="process"),
+            WorkflowNode(id="design", name="Design", node_type="process"),
+            WorkflowNode(id="implementation", name="Implementation", node_type="process"),
+            WorkflowNode(id="testing", name="Testing", node_type="process"),
+            WorkflowNode(id="review", name="Code Review", node_type="process"),
+            WorkflowNode(id="end", name="End", node_type="end"),
+        ],
+        edges=[
+            WorkflowEdge(source="start", target="analysis", cost=5),
+            WorkflowEdge(source="analysis", target="design", cost=10),
+            WorkflowEdge(source="design", target="implementation", cost=20),
+            WorkflowEdge(source="implementation", target="testing", cost=15),
+            WorkflowEdge(source="testing", target="review", cost=8),
+            WorkflowEdge(source="review", target="end", cost=2),
+            # Alternative path: fast-track from analysis to implementation
+            WorkflowEdge(source="analysis", target="implementation", cost=15),
+        ],
+    )
 
-    # Analyze the code
-    print("Analyzing code...")
-    analysis = analyzer.analyze_code(sample_code, "calculator.py")
-    print()
+    # Create project context
+    project = ProjectContext(
+        project_id="proj-001",
+        name="Sample Project",
+        owner="developer@example.com",
+        phase="implementation",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        workflow=workflow,
+    )
 
-    # Print summary
-    print("ANALYSIS SUMMARY")
+    print("PROJECT INFORMATION")
     print("-" * 80)
-    print(f"File: {analysis.file_path}")
-    print(f"File size: {analysis.file_size:,} bytes")
-    print(f"Total issues: {analysis.total_issues}")
-    print(f"  - Critical: {analysis.critical_issues}")
-    print(f"  - High: {analysis.high_issues}")
+    print(f"Project: {project.name}")
+    print(f"Owner: {project.owner}")
+    print(f"Phase: {project.phase}")
+    print(f"Workflow: {workflow.name}")
+    print(f"Nodes: {len(workflow.nodes)}")
+    print(f"Edges: {len(workflow.edges)}")
     print()
 
-    # Print issues
-    if analysis.issues:
-        print("DETECTED ISSUES")
-        print("-" * 80)
-        for issue in analysis.issues:
-            severity = f"[{issue.severity.upper()}]"
-            print(f"{severity:10} {issue.location}")
-            print(f"           {issue.message}")
-            if issue.suggestion:
-                print(f"           SUGGESTION: {issue.suggestion}")
-            print()
-    else:
-        print("No issues found!")
+    # Analyze workflow costs
+    print("WORKFLOW COST ANALYSIS")
+    print("-" * 80)
+    cost_calculator = WorkflowCostCalculator()
+    total_cost = cost_calculator.calculate_workflow_costs(project)
+    print(f"Total workflow cost: {total_cost}")
+    print()
+
+    # Find optimal paths
+    print("WORKFLOW PATHS")
+    print("-" * 80)
+    path_finder = WorkflowPathFinder()
+    paths = path_finder.find_workflow_paths(project)
+    for i, path in enumerate(paths[:3], 1):  # Show top 3 paths
+        print(f"Path {i}: {' → '.join([node.name for node in path.nodes])}")
+        print(f"  Cost: {path.cost}")
         print()
 
-    # Print metrics
-    if analysis.metrics:
-        print("CODE METRICS")
-        print("-" * 80)
-        for metric in analysis.metrics:
-            indicator = "[OK]" if metric.status == "ok" else "[!]"
-            print(f"{indicator:5} {metric.name:25} {metric.value:10.1f}")
-        print()
-
-    # Print patterns
-    if analysis.patterns:
-        print("DETECTED PATTERNS")
-        print("-" * 80)
-        for pattern in analysis.patterns:
-            print(f"• {pattern}")
-        print()
-
-    # Get recommendations
-    print("RECOMMENDATIONS")
+    # Analyze workflow risks
+    print("WORKFLOW RISK ANALYSIS")
     print("-" * 80)
-    recommendations = analyzer.get_recommendations(analysis)
-    for i, rec in enumerate(recommendations, 1):
-        print(f"{i}. {rec}")
+    risk_calculator = WorkflowRiskCalculator()
+    risks = risk_calculator.calculate_workflow_risks(project)
+    print(f"Total risk score: {risks.overall_risk_score}")
+    print(f"Risk level: {risks.risk_level}")
     print()
 
-    # Generate reports in different formats
-    print("GENERATING REPORTS")
-    print("-" * 80)
-
-    # Text report
-    print("\n1. TEXT REPORT (excerpt):")
-    print("-" * 40)
-    text_report = analyzer.generate_report(analysis, format="text")
-    # Print first 50 lines
-    lines = text_report.split("\n")[:30]
-    print("\n".join(lines))
-    print("... (truncated)")
-
-    # JSON report
-    print("\n2. JSON REPORT (excerpt):")
-    print("-" * 40)
-    json_report = analyzer.generate_report(analysis, format="json")
-    # Print first 30 lines
-    lines = json_report.split("\n")[:15]
-    print("\n".join(lines))
-    print("... (truncated)")
-
-    # Markdown report
-    print("\n3. MARKDOWN REPORT (excerpt):")
-    print("-" * 40)
-    md_report = analyzer.generate_report(analysis, format="markdown")
-    # Print first 30 lines
-    lines = md_report.split("\n")[:20]
-    print("\n".join(lines))
-    print("... (truncated)")
-
-    print()
     print("=" * 80)
     print("Example completed successfully!")
     print("=" * 80)
