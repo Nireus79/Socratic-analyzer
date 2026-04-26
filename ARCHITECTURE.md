@@ -1,262 +1,346 @@
 # Socratic Analyzer - Architecture
 
-**Status**: Independent library extracted from Socrates monolith (v0.1.5)
+Production-grade code analysis with LLM-powered insights.
 
-## Overview
+## System Overview
 
-Socratic Analyzer provides code analysis, workflow optimization, and project quality assessment. It's designed as a standalone library that can work independently or integrate with the Socratic ecosystem.
+Socratic Analyzer provides:
+- Code quality metrics and analysis
+- Workflow cost and risk calculation
+- Project maturity assessment
+- Insight categorization by phase
+- Validation and quality checks
+- Analytics and monitoring
 
 ## Component Hierarchy
 
 ```
-┌─────────────────────────────────────────┐
-│      Socratic Analyzer                  │
-├─────────────────────────────────────────┤
-│  Tier 1: Analysis Engines               │
-│  ├─ WorkflowCostCalculator              │
-│  ├─ WorkflowPathFinder                  │
-│  ├─ WorkflowRiskCalculator              │
-│  ├─ InsightCategorizer                  │
-│  ├─ MaturityCalculator                  │
-│  └─ AnalyticsCalculator                 │
-├─────────────────────────────────────────┤
-│  Tier 2: Validators & Checkers          │
-│  ├─ DependencyValidator                 │
-│  ├─ SyntaxValidator                     │
-│  └─ TestExecutor                        │
-├─────────────────────────────────────────┤
-│  Tier 3: Data Models                    │
-│  ├─ ProjectContext                      │
-│  ├─ TeamMemberRole                      │
-│  ├─ WorkflowDefinition                  │
-│  └─ CategoryScore / PhaseMaturity       │
-├─────────────────────────────────────────┤
-│  Tier 4: Monitoring                     │
-│  └─ TokenUsage                          │
-├─────────────────────────────────────────┤
-│  Dependencies                           │
-│  ├─ socratic-maturity (core)            │
-│  ├─ socratic-nexus (optional)           │
-│  └─ Standard library                    │
-└─────────────────────────────────────────┘
+Socratic Analyzer
+    |
+    ├-- Analysis Engines
+    │   ├-- WorkflowCostCalculator
+    │   ├-- WorkflowPathFinder
+    │   ├-- WorkflowRiskCalculator
+    │   ├-- InsightCategorizer
+    │   ├-- MaturityCalculator
+    │   └-- AnalyticsCalculator
+    |
+    ├-- Code Analysis
+    │   ├-- CodeStructureAnalyzer
+    │   ├-- DependencyValidator
+    │   ├-- SyntaxValidator
+    │   └-- TestExecutor
+    |
+    ├-- Data Models
+    │   ├-- ProjectContext
+    │   ├-- WorkflowDefinition
+    │   ├-- CategoryScore
+    │   └-- TeamMemberRole
+    |
+    └-- Integrations
+        ├-- socratic-nexus (LLM client)
+        ├-- socratic-conflict (conflict detection)
+        ├-- socratic-maturity (maturity tracking)
+        └-- socratic-knowledge (knowledge base)
 ```
 
 ## Core Components
 
 ### 1. Workflow Analysis
 
-**WorkflowCostCalculator**
-- Calculates execution costs of workflow paths
-- Accounts for node complexity and edge costs
-- Provides cost optimization insights
+#### WorkflowCostCalculator
+Calculates execution costs of workflow paths:
+- Node complexity estimation
+- Edge traversal costs
+- Total path cost aggregation
+- Cost optimization insights
 
-**WorkflowPathFinder**
-- Identifies all possible workflow paths
-- Ranks paths by efficiency
-- Recommends optimal execution sequences
+#### WorkflowPathFinder
+Identifies and ranks workflow paths:
+- Path enumeration
+- Efficiency ranking
+- Optimal path recommendation
+- Alternative path analysis
 
-**WorkflowRiskCalculator**
-- Assesses risks in workflow execution
-- Identifies bottlenecks and failure points
-- Provides risk mitigation strategies
+#### WorkflowRiskCalculator
+Assesses risks in workflow execution:
+- Risk score calculation
+- Bottleneck identification
+- Failure point analysis
+- Risk mitigation suggestions
 
-### 2. Code Quality
+### 2. Code Quality Analysis
 
-**InsightCategorizer**
-- Categorizes insights by workflow phase
-- Aligns recommendations with project phase
-- Prioritizes actions by phase requirements
+#### InsightCategorizer
+Categorizes insights by workflow phase:
+- Phase-specific recommendations
+- Priority assignment
+- Category mapping
+- Action prioritization
 
-**MaturityCalculator**
-- Tracks project maturity across phases
-- Scores categories (code quality, testing, docs, etc.)
-- Calculates overall project health
+#### MaturityCalculator
+Tracks project maturity:
+- Phase progression scoring
+- Category quality scores
+- Overall health calculation
+- Trend analysis
 
-**AnalyticsCalculator**
-- Extracts metrics from project data
-- Identifies patterns and trends
-- Generates statistical insights
+#### AnalyticsCalculator
+Generates project analytics:
+- Metric extraction
+- Pattern detection
+- Trend analysis
+- Comparative metrics
 
-### 3. Validation Tools
+### 3. Code Structure Analysis
 
-**DependencyValidator**
-- Validates project dependencies
-- Checks for conflicts and compatibility
-- Identifies missing or outdated packages
+#### CodeStructureAnalyzer
+Analyzes code organization:
+- Module and class hierarchy
+- Function dependency graphs
+- Code organization patterns
+- Structural quality metrics
 
-**SyntaxValidator**
-- Validates code syntax across files
-- Detects parse errors
-- Reports detailed error locations
+### 4. Validation Tools
 
-**TestExecutor**
-- Executes test suites
-- Tracks test results
-- Calculates coverage metrics
+#### DependencyValidator
+Validates project dependencies:
+- Dependency resolution
+- Conflict detection
+- Compatibility checking
+- Version validation
 
-### 4. Data Models
+#### SyntaxValidator
+Validates code syntax:
+- Parse error detection
+- Syntax correctness checking
+- Error location reporting
+- Error categorization
 
-**ProjectContext**
-- Complete project state and metadata
-- Team structure and collaboration
-- Maturity tracking and history
-- Workflow definitions and state
-- Notes and conversation history
+#### TestExecutor
+Executes tests and tracks results:
+- Test discovery and execution
+- Result aggregation
+- Coverage calculation
+- Performance measurement
 
-**WorkflowDefinition**
-- Workflow structure and nodes
-- Execution edges with costs
-- Approval states and transitions
-- Execution history
+## Dependency Diagram
 
-**TeamMemberRole**
-- Team member information
-- Role assignments
-- Skills and capabilities
-- Join dates and history
+```
+socratic-analyzer
+    |
+    ├-- socratic-maturity (required)
+    │   └-- Pure calculation library
+    |
+    ├-- socratic-nexus (optional)
+    │   ├-- LLM client for insights
+    │   └-- Token cost tracking
+    |
+    ├-- socratic-conflict (optional)
+    │   └-- Conflict detection in analysis
+    |
+    └-- Standard library
+        ├-- ast (code parsing)
+        ├-- collections (data structures)
+        └-- statistics (calculations)
+```
 
 ## Data Flow
 
 ### Analysis Pipeline
 
 ```
-1. Input (ProjectContext)
-    ↓
-2. Analysis Phase
-    ├─ Workflow Analysis (PathFinder, CostCalculator, RiskCalculator)
-    ├─ Code Validation (DependencyValidator, SyntaxValidator)
-    ├─ Quality Assessment (MaturityCalculator)
-    └─ Analytics (AnalyticsCalculator)
-    ↓
-3. Insight Categorization
-    └─ InsightCategorizer (phase-based organization)
-    ↓
-4. Output (Recommendations, Metrics, Reports)
+Source Code
+    |
+    v
+CodeStructureAnalyzer
+    |
+    +---> Extract structure
+    +---> Identify patterns
+    +---> Detect issues
+    |
+    v
+InsightCategorizer
+    |
+    +---> Categorize by phase
+    +---> Assign priority
+    +---> Suggest actions
+    |
+    v
+Validators (Syntax, Dependency, Tests)
+    |
+    +---> Check syntax
+    +---> Validate dependencies
+    +---> Execute tests
+    |
+    v
+MaturityCalculator
+    |
+    +---> Calculate scores
+    +---> Assess progress
+    +---> Identify gaps
+    |
+    v
+Workflow Analysis (Cost, Path, Risk)
+    |
+    v
+Insights & Recommendations
 ```
 
 ## Integration Points
 
-### External Dependencies
+### With socratic-nexus (LLM Client)
+- Use LLM for generating code insights
+- Analyze code quality via LLM
+- Generate improvement suggestions
+- Track token usage and costs
 
-**socratic-maturity** (required)
-- Maturity tracking and scoring
-- Category assessment
-- Phase progression calculation
+### With socratic-conflict (Conflict Detection)
+- Detect conflicts in code analysis results
+- Resolve conflicting recommendations
+- Prioritize among alternatives
+- Track resolution decisions
 
-**socratic-nexus** (optional)
-- LLM-based recommendations
-- Intelligent insight generation
-- Multi-provider support
+### With socratic-maturity (Maturity Tracking)
+- Calculate maturity scores from analysis
+- Track progress toward phase completion
+- Identify weak categories
+- Recommend skills and training
 
-**langchain** (optional)
-- Integration with LangChain agents
-- Tool usage in complex workflows
-- Agent-based code analysis
+### With socratic-workflow (Workflow Management)
+- Analyze workflow paths
+- Calculate workflow costs
+- Assess workflow risks
+- Optimize workflow execution
 
-## Key Design Patterns
+### With socratic-knowledge (Knowledge Base)
+- Store analysis results
+- Track project history
+- Share insights across team
+- Build knowledge from past analyses
 
-### 1. Pluggable Analyzers
-Each analyzer is independent and can be used separately or combined.
+## Insight Categorization
 
-### 2. Data-Driven
-Analysis based on ProjectContext models, not string parsing.
+Insights are categorized by workflow phase:
 
-### 3. Phase-Aware
-Actions and recommendations aligned with project phase (discovery, analysis, design, implementation).
+### Discovery Phase Insights
+- Architecture feasibility
+- Technology stack analysis
+- Requirement completeness
+- Team capability assessment
 
-### 4. Maturity-Driven
-Tracks progress toward project goals using maturity metrics.
+### Analysis Phase Insights
+- Data model analysis
+- API design review
+- Requirement validation
+- Architecture deepening
 
-### 5. Cost-Optimized
-Workflow analysis focuses on efficiency and bottleneck identification.
+### Design Phase Insights
+- Design pattern validation
+- Scalability assessment
+- Security design review
+- Performance planning
 
-## Error Handling
+### Implementation Phase Insights
+- Code quality metrics
+- Test coverage analysis
+- Documentation completeness
+- Performance optimization
 
-All validators follow consistent patterns:
-- Input validation
-- Detailed error reporting
-- Suggestion generation
-- Non-blocking (collect all issues before failing)
+## Quality Metrics
+
+### Code Quality
+- Complexity scores
+- Maintainability index
+- Test coverage percentage
+- Code duplication
+
+### Project Health
+- Phase completion
+- Maturity score
+- Category balance
+- Trend direction
+
+### Performance Metrics
+- Build time
+- Test execution time
+- Code execution time
+- Memory usage
 
 ## Performance Characteristics
 
-- **Single file validation**: O(n) where n = file size
-- **Project analysis**: O(m*n) where m = file count, n = avg file size
-- **Workflow analysis**: O(nodes + edges) for pathfinding
-- **Batch operations**: Optimized for parallel analysis
+- **Code Analysis**: O(n) where n = lines of code
+- **Path Finding**: O(e) where e = workflow edges
+- **Risk Calculation**: O(p*n) where p = paths, n = nodes
+- **Validation**: O(m) where m = items to validate
 
-## Testing Strategy
+## Extension Points
 
-**Unit Tests** (15.76% coverage)
-- Import verification tests
-- Model instantiation tests
-- Basic interface validation
-
-**Future Tests** (expansion needed)
-- Analyzer functional tests
-- Integration tests
-- Performance benchmarks
-- Edge case validation
-
-## Dependencies Management
-
-### Core Dependencies
-```
-socratic-maturity>=0.1.1
-socratic-nexus>=0.3.6
+### Custom Analyzers
+```python
+class CustomAnalyzer(BaseAnalyzer):
+    def analyze(self, source):
+        # Custom analysis logic
+        pass
 ```
 
-### Optional Integrations
-```
-langchain>=0.1.0      # LangChain tool integration
-langgraph>=0.0.1      # Graph-based workflows
-```
-
-### Development
-```
-pytest>=7.0
-black>=23.0
-ruff>=0.1.0
-mypy>=1.0
+### Custom Validators
+```python
+class CustomValidator(BaseValidator):
+    def validate(self, source):
+        # Custom validation logic
+        pass
 ```
 
-## Configuration
+### Custom Metrics
+```python
+class CustomMetrics(BaseMetrics):
+    def calculate(self, source):
+        # Custom metric calculation
+        pass
+```
 
-Pragmatic mypy configuration for extracted library:
-- `ignore_missing_imports = true` (external library types)
-- Disabled error codes for untyped integrations
-- Focus on functional correctness over strict typing
+## Workflow Cost Analysis Example
 
-## Future Enhancements
+```
+Workflow Path:
+  START -> DISCOVERY -> ANALYSIS -> DESIGN -> END
 
-1. **Enhanced Analytics**
-   - Trend analysis across project timeline
-   - Predictive maturity scoring
-   - Performance profiling
+Node Costs:
+  DISCOVERY: 1000 tokens
+  ANALYSIS: 1500 tokens
+  DESIGN: 2000 tokens
 
-2. **Advanced Workflow Features**
-   - Parallel path execution
-   - Dynamic workflow generation
-   - Workflow learning from history
+Edge Costs:
+  DISCOVERY->ANALYSIS: 100 tokens
+  ANALYSIS->DESIGN: 150 tokens
 
-3. **Expanded Validation**
-   - Security scanning
-   - Performance profiling
-   - Architecture validation
+Total Cost: 4750 tokens
+Estimated USD: $0.24 (at $0.05/1000 tokens)
+```
 
-4. **Integration Expansion**
-   - Additional framework support
-   - Custom analyzer plugins
-   - Report generation templates
+## Maturity Scoring Example
 
-## See Also
+```
+Project State:
+  Discovery: 100% complete (score: 1.0)
+  Analysis: 60% complete (score: 0.6)
+  Design: 0% complete (score: 0.0)
+  Implementation: 0% complete (score: 0.0)
 
-- [README.md](README.md) - User guide and quick start
-- [CHANGELOG.md](CHANGELOG.md) - Version history and changes
-- [Socratic Ecosystem](https://github.com/Nireus79/Socrates-nexus/blob/main/ECOSYSTEM.md) - Platform overview
+Overall Maturity: 0.8 (80%)
+Current Phase: Analysis
+Quality Categories:
+  - Code Quality: 0.65
+  - Testing: 0.5
+  - Documentation: 0.7
+  - Architecture: 0.75
+  - Performance: 0.6
+
+Weak Categories: Testing, Performance
+Recommendation: Focus on testing and performance optimization
+```
 
 ---
 
-**Part of the Socratic Ecosystem**
-
-For questions or contributions, visit: https://github.com/Nireus79/Socratic-analyzer
+Part of the Socratic Ecosystem | Code Analysis | Workflow Optimization | Quality Assessment
