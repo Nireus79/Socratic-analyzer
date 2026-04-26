@@ -106,7 +106,7 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-addopts = "--cov=src/socratic_analyzer --cov-report=term-missing --cov-report=html -v"
+addopts = "--cov=src/socratic_analyzer --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=5 -v"
 markers = [
     "unit: Unit tests",
     "integration: Integration tests",
