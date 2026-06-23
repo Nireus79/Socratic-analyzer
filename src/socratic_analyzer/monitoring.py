@@ -1,25 +1,14 @@
+"""Monitoring and token usage models for Socrates AI"""
+
 from __future__ import annotations
 
-"""
-Monitoring and token usage models for Socrates AI
-"""
-
 import datetime
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 
 
 @dataclass
 class TokenUsage:
-    @staticmethod
-    def from_dict(data: dict) -> "TokenUsage":
-        """Deserialize from dictionary."""
-        return TokenUsage(**data)
-
-    def to_dict(self) -> dict:
-        """Serialize to dictionary."""
-        from dataclasses import asdict
-
-        return asdict(self)
+    """Tracks API token usage and costs"""
 
     input_tokens: int
     output_tokens: int
@@ -29,12 +18,16 @@ class TokenUsage:
     cost_estimate: float = 0.0
 
     @staticmethod
-    def from_dict(data: dict) -> "TokenUsage":
+    def from_dict(data: dict) -> TokenUsage:
         """Deserialize from dictionary."""
+        data = dict(data)
+        if "timestamp" in data and isinstance(data["timestamp"], str):
+            data["timestamp"] = datetime.datetime.fromisoformat(data["timestamp"])
         return TokenUsage(**data)
 
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
-        from dataclasses import asdict
-
-        return asdict(self)
+        data = asdict(self)
+        if "timestamp" in data and isinstance(data["timestamp"], datetime.datetime):
+            data["timestamp"] = data["timestamp"].isoformat()
+        return data
