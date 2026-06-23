@@ -5,12 +5,21 @@ Monitoring and token usage models for Socrates AI
 """
 
 import datetime
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 
 @dataclass
 class TokenUsage:
-    """Tracks API token usage and costs"""
+    @staticmethod
+    def from_dict(data: dict) -> "TokenUsage":
+        """Deserialize from dictionary."""
+        return TokenUsage(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
 
     input_tokens: int
     output_tokens: int

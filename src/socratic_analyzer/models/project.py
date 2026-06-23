@@ -3,7 +3,7 @@ Project context model for Socrates AI
 """
 
 import datetime
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Dict, List, Optional
 
 from .role import TeamMemberRole
@@ -273,3 +273,13 @@ class ProjectContext:
     def is_solo_project(self) -> bool:
         """Check if this is a solo project (only owner, no other team members)."""
         return len(self.team_members or []) <= 1
+    @staticmethod
+    def from_dict(data: dict) -> "ProjectContext":
+        """Deserialize from dictionary."""
+        return ProjectContext(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
