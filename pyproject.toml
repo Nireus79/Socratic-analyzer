@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "socratic-analyzer"
-version = "0.1.6"
+version = "0.1.7"
 description = "Production-grade code analysis package with LLM-powered insights"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -79,7 +79,7 @@ select = ["E", "F", "W", "I", "UP"]
 ignore = ["E402", "E501", "UP006", "UP035"]
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "0.1.7"
 warn_return_any = false
 warn_unused_configs = true
 warn_redundant_casts = false
