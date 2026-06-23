@@ -18,8 +18,8 @@ class TokenUsage:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
 
     input_tokens: int
     output_tokens: int
@@ -27,6 +27,7 @@ class TokenUsage:
     timestamp: datetime.datetime
     model: str = "claude-opus-4-5-20251101"
     cost_estimate: float = 0.0
+
     @staticmethod
     def from_dict(data: dict) -> "TokenUsage":
         """Deserialize from dictionary."""
@@ -35,5 +36,5 @@ class TokenUsage:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)

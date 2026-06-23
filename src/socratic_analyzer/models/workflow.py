@@ -19,6 +19,7 @@ class WorkflowNodeType(Enum):
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
+
         return asdict(self)
 
     """Types of nodes in a workflow graph"""
@@ -51,8 +52,8 @@ class WorkflowNode:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
 
     node_id: str
     node_type: WorkflowNodeType
@@ -72,15 +73,14 @@ class WorkflowEdge:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
 
     from_node: str
     to_node: str
     probability: float = 1.0
     condition: Optional[str] = None
     cost: int = 0
-
 
     @staticmethod
     def from_dict(data: dict) -> "WorkflowEdge":
@@ -90,7 +90,9 @@ class WorkflowEdge:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
+
         return asdict(self)
+
 
 @dataclass
 class WorkflowPath:
@@ -102,8 +104,8 @@ class WorkflowPath:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
 
     path_id: str
     nodes: List[str]  # Ordered list of node IDs in this path
@@ -120,7 +122,6 @@ class WorkflowPath:
     expected_maturity_gain: float = 0.0
     roi_score: float = 0.0
 
-
     @staticmethod
     def from_dict(data: dict) -> "WorkflowPath":
         """Deserialize from dictionary."""
@@ -129,7 +130,9 @@ class WorkflowPath:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
+
         return asdict(self)
+
 
 @dataclass
 class WorkflowDefinition:
@@ -141,8 +144,8 @@ class WorkflowDefinition:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
 
     workflow_id: str
     name: str
@@ -154,7 +157,6 @@ class WorkflowDefinition:
     strategy: str = "balanced"
     metadata: Dict[str, Any] = field(default_factory=dict)
 
-
     @staticmethod
     def from_dict(data: dict) -> "WorkflowDefinition":
         """Deserialize from dictionary."""
@@ -163,7 +165,9 @@ class WorkflowDefinition:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
+
         return asdict(self)
+
 
 @dataclass
 class WorkflowApprovalRequest:
@@ -175,8 +179,8 @@ class WorkflowApprovalRequest:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
 
     request_id: str
     project_id: str
@@ -191,7 +195,6 @@ class WorkflowApprovalRequest:
     approved_path_id: Optional[str] = None
     approval_timestamp: Optional[str] = None
 
-
     @staticmethod
     def from_dict(data: dict) -> "WorkflowApprovalRequest":
         """Deserialize from dictionary."""
@@ -200,7 +203,9 @@ class WorkflowApprovalRequest:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
+
         return asdict(self)
+
 
 @dataclass
 class WorkflowExecutionState:
@@ -212,8 +217,8 @@ class WorkflowExecutionState:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
 
     execution_id: str
     workflow_id: str
@@ -225,6 +230,7 @@ class WorkflowExecutionState:
     estimated_tokens_remaining: int = 0
     started_at: str = ""
     status: str = "active"  # "active", "completed", "paused"
+
     @staticmethod
     def from_dict(data: dict) -> "WorkflowExecutionState":
         """Deserialize from dictionary."""
@@ -233,5 +239,5 @@ class WorkflowExecutionState:
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
 
+        return asdict(self)
