@@ -27,3 +27,13 @@ class TokenUsage:
     timestamp: datetime.datetime
     model: str = "claude-opus-4-5-20251101"
     cost_estimate: float = 0.0
+    @staticmethod
+    def from_dict(data: dict) -> "TokenUsage":
+        """Deserialize from dictionary."""
+        return TokenUsage(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+

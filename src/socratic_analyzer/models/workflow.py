@@ -11,6 +11,16 @@ from typing import Any, Dict, List, Optional
 
 
 class WorkflowNodeType(Enum):
+    @staticmethod
+    def from_dict(data: dict) -> "WorkflowNode":
+        """Deserialize from dictionary."""
+        return WorkflowNode(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
     """Types of nodes in a workflow graph"""
 
     PHASE_START = "phase_start"
@@ -72,6 +82,16 @@ class WorkflowEdge:
     cost: int = 0
 
 
+    @staticmethod
+    def from_dict(data: dict) -> "WorkflowEdge":
+        """Deserialize from dictionary."""
+        return WorkflowEdge(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
 @dataclass
 class WorkflowPath:
     @staticmethod
@@ -101,6 +121,16 @@ class WorkflowPath:
     roi_score: float = 0.0
 
 
+    @staticmethod
+    def from_dict(data: dict) -> "WorkflowPath":
+        """Deserialize from dictionary."""
+        return WorkflowPath(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
 @dataclass
 class WorkflowDefinition:
     @staticmethod
@@ -124,6 +154,16 @@ class WorkflowDefinition:
     strategy: str = "balanced"
     metadata: Dict[str, Any] = field(default_factory=dict)
 
+
+    @staticmethod
+    def from_dict(data: dict) -> "WorkflowDefinition":
+        """Deserialize from dictionary."""
+        return WorkflowDefinition(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
 
 @dataclass
 class WorkflowApprovalRequest:
@@ -152,6 +192,16 @@ class WorkflowApprovalRequest:
     approval_timestamp: Optional[str] = None
 
 
+    @staticmethod
+    def from_dict(data: dict) -> "WorkflowApprovalRequest":
+        """Deserialize from dictionary."""
+        return WorkflowApprovalRequest(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
 @dataclass
 class WorkflowExecutionState:
     @staticmethod
@@ -175,3 +225,13 @@ class WorkflowExecutionState:
     estimated_tokens_remaining: int = 0
     started_at: str = ""
     status: str = "active"  # "active", "completed", "paused"
+    @staticmethod
+    def from_dict(data: dict) -> "WorkflowExecutionState":
+        """Deserialize from dictionary."""
+        return WorkflowExecutionState(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
