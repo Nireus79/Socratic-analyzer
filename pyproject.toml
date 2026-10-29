@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
-    {name = "Socratic Analyzer", email = "info@socratic-analyzer.dev"}
+    {name = "Efthimios Angelopoulos", email = "Hermes_creative@proton.me"}
 ]
 keywords = ["code-analysis", "static-analysis", "metrics", "linting", "quality", "insights"]
 classifiers = [
