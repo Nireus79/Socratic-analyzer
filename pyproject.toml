@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "socratic-analyzer"
-version = "0.1.7"
-description = "Production-grade code analysis package with LLM-powered insights"
+version = "0.1.8"
+description = "Code analysis package with LLM-powered insights"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
@@ -14,7 +14,7 @@ authors = [
 ]
 keywords = ["code-analysis", "static-analysis", "metrics", "linting", "quality", "insights"]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
