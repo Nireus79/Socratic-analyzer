@@ -1,6 +1,6 @@
 # Socratic Analyzer - Architecture
 
-Production-grade code analysis with LLM-powered insights.
+Code analysis with LLM-powered insights.
 
 ## System Overview
 
