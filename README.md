@@ -44,8 +44,8 @@ Socratic Analyzer provides tools for analyzing project workflows, assessing code
 - `WorkflowDefinition` - Workflow paths and execution states
 
 **Analytics**:
-- `AnalyticsCalculator` - Calculate metrics from project data
-- `MaturityCalculator` - Assess project maturity
+- `analytics_calculator.AnalyticsCalculator` - Calculate metrics from project data
+- `maturity_calculator.MaturityCalculator` - Assess project maturity
 - `TokenUsage` - Track LLM usage and costs
 
 ## Installation
@@ -74,53 +74,62 @@ pip install socratic-analyzer[dev]
 
 ## Quick Start
 
-### Analyze a Project
+### Cost of a workflow path
 
 ```python
-from socratic_analyzer.models import ProjectContext
 from socratic_analyzer.core import WorkflowCostCalculator
-
-# Create project context
-project = ProjectContext(
-    project_id="proj-123",
-    name="MyProject",
-    owner="user@example.com",
-    phase="analysis",
-    created_at=datetime.now(),
-    updated_at=datetime.now()
+from socratic_analyzer.models import (
+    WorkflowDefinition, WorkflowEdge, WorkflowNode, WorkflowPath,
 )
+from socratic_analyzer.models.workflow import WorkflowNodeType
 
-# Analyze workflow costs
-calculator = WorkflowCostCalculator()
-costs = calculator.calculate_workflow_costs(project)
-print(f"Estimated cost: {costs}")
+workflow = WorkflowDefinition(
+    workflow_id="wf-1",
+    name="Analysis workflow",
+    phase="analysis",
+    nodes={
+        "start": WorkflowNode("start", WorkflowNodeType.PHASE_START, "Start"),
+        "review": WorkflowNode("review", WorkflowNodeType.ANALYSIS, "Review", estimated_tokens=500),
+        "end": WorkflowNode("end", WorkflowNodeType.PHASE_END, "End"),
+    },
+    edges=[
+        WorkflowEdge(from_node="start", to_node="review", cost=10),
+        WorkflowEdge(from_node="review", to_node="end", cost=5),
+    ],
+    start_node="start",
+    end_nodes=["end"],
+)
+path = WorkflowPath(path_id="p1", nodes=["start", "review", "end"], edges=[])
+
+print(WorkflowCostCalculator().calculate_path_cost(path, workflow))
+# {'total_tokens': 500, 'total_cost_usd': 0.0225, 'token_breakdown': {...}}
 ```
 
-### Validate Code Dependencies
+### Validate dependencies
 
 ```python
 from socratic_analyzer.utils.validators import DependencyValidator
 
-validator = DependencyValidator()
-
-# Check dependency compatibility
-issues = validator.validate_dependencies("./requirements.txt")
-for issue in issues:
-    print(f"Issue: {issue['type']} - {issue['message']}")
+result = DependencyValidator().validate("./requirements.txt")
+print(result["valid"], result["issues"], result["warnings"])
 ```
 
-### Track Project Maturity
+`validate` takes a project directory or a file and returns a dict with `valid`, `issues`, `warnings` and `metadata`.
+
+### Phase maturity
 
 ```python
 from socratic_analyzer.maturity_calculator import MaturityCalculator
 
 calculator = MaturityCalculator()
+print(calculator.get_phase_categories("discovery"))  # category -> target points
 
-# Calculate overall maturity
-maturity = calculator.calculate_maturity(project)
-print(f"Project maturity: {maturity.overall_score}%")
-print(f"Phase scores: {maturity.phase_maturity_scores}")
+specs = [{"category": "problem_definition", "confidence": 0.9, "value": 1.0}]
+maturity = calculator.calculate_phase_maturity(specs, "discovery")
+print(maturity.overall_score, maturity.missing_categories)
 ```
+
+The phases are discovery, analysis, design and implementation; the score is the confidence-weighted sum per category, capped at the category target, as a percentage of 90.
 
 ## Testing
 
@@ -141,32 +150,6 @@ All checks passing:
 - ✅ Black formatting
 - ✅ Ruff linting
 - ✅ Mypy type checking (pragmatic for extracted library)
-
-## Configuration Examples
-
-### Workflow Analysis
-
-```python
-from socratic_analyzer.models import WorkflowDefinition, WorkflowNode, WorkflowEdge
-
-# Define workflow
-workflow = WorkflowDefinition(
-    workflow_id="wf-123",
-    name="Analysis Workflow",
-    description="Project analysis process",
-    nodes=[
-        WorkflowNode(id="start", name="Start", node_type="start"),
-        WorkflowNode(id="analysis", name="Analysis", node_type="process"),
-        WorkflowNode(id="review", name="Review", node_type="process"),
-        WorkflowNode(id="end", name="End", node_type="end"),
-    ],
-    edges=[
-        WorkflowEdge(source="start", target="analysis", cost=10),
-        WorkflowEdge(source="analysis", target="review", cost=15),
-        WorkflowEdge(source="review", target="end", cost=5),
-    ]
-)
-```
 
 ## Documentation
 
@@ -219,9 +202,6 @@ pip install socratic-analyzer
 ```bash
 pip install socrates-ai  # the earlier research prototype that uses this package
 ```
-
-### Integration Example:
-
 
 ### More Information:
 - 📖 [Full Socrates Documentation](https://github.com/Nireus79/Socrates/tree/main/docs)
